@@ -1,0 +1,3169 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Siddiqi 360</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<meta name="apple-mobile-web-app-title" content="Siddiqi 360">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="theme-color" content="#16233A">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+
+--ink:#16233A;
+
+--ink-soft:#5C6B7D;
+
+--paper:#EFF1EC;
+
+--card:#FFFFFF;
+
+--line:rgba(22,35,58,0.10);
+
+--optimize:#3E5C76;
+
+--optimize-tint:#E4EAEF;
+
+--restore:#A85D3B;
+
+--restore-tint:#F3E5DD;
+
+--thrive:#5C7A5C;
+
+--thrive-tint:#E4EBE2;
+
+--shadow: 0 20px 45px rgba(22,35,58,0.16);
+
+}
+
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+
+html,body{height:100%;}
+
+body{
+
+margin:0;
+
+background: var(--paper);
+
+font-family:'Inter', sans-serif;
+
+min-height:100vh;
+
+min-height:100dvh;
+
+}
+
+.device{
+
+width:100%;
+
+max-width:520px;
+
+margin:0 auto;
+
+min-height:100vh;
+
+min-height:100dvh;
+
+background:var(--paper);
+
+position:relative;
+
+overflow:hidden;
+
+display:flex; flex-direction:column;
+
+box-shadow: 0 0 60px rgba(22,35,58,0.06);
+
+}
+
+.notch{ display:none; }
+
+.status{ display:none; }
+
+.screens{ flex:1; position:relative; overflow:hidden; padding-top:env(safe-area-inset-top); }
+
+.screen{
+
+position:absolute; inset:0;
+
+overflow-y:auto;
+
+padding: 4px 22px calc(100px + env(safe-area-inset-bottom));
+
+opacity:0; pointer-events:none;
+
+transform:translateY(8px);
+
+transition:opacity .22s ease, transform .22s ease;
+
+}
+
+.screen.active{ opacity:1; pointer-events:auto; transform:translateY(0); }
+
+.screen::-webkit-scrollbar{display:none;}
+
+/* ---------- SPLASH ---------- */
+
+#splash{
+
+background:var(--ink);
+
+display:flex; flex-direction:column; align-items:center; justify-content:center;
+
+padding:0 40px; text-align:center;
+
+}
+
+#splash .mark{
+
+font-family:'Fraunces', serif; font-size:38px; color:#F4F3EE; letter-spacing:0.5px;
+
+}
+
+#splash .mark span{ color:#9FB0A6; }
+
+#splash .tagline{
+
+margin-top:14px; font-family:'IBM Plex Mono', monospace; font-size:12px;
+
+letter-spacing:3px; color:#9AA6B5; text-transform:uppercase;
+
+}
+
+#splash .sub{
+
+margin-top:28px; color:#C7CCD6; font-size:14.5px; line-height:1.6; max-width:270px;
+
+}
+
+#splash button{
+
+margin-top:46px; background:#F4F3EE; color:var(--ink); border:none;
+
+padding:14px 30px; border-radius:30px; font-size:14px; font-weight:600;
+
+font-family:'Inter',sans-serif; letter-spacing:0.3px; cursor:pointer;
+
+}
+
+/* ---------- SHARED ---------- */
+
+h1.page-title{
+
+font-family:'Fraunces', serif; font-size:26px; font-weight:500; color:var(--ink);
+
+margin:18px 0 2px;
+
+}
+
+.page-sub{ color:var(--ink-soft); font-size:13.5px; margin-bottom:18px; }
+
+.eyebrow{
+
+font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:2px;
+
+text-transform:uppercase; color:var(--ink-soft);
+
+}
+
+.card{
+
+background:var(--card); border-radius:18px; padding:18px 18px;
+
+border:1px solid var(--line); margin-bottom:14px;
+
+}
+
+/* ---------- PROCEDURE TOGGLE ---------- */
+
+.proc-toggle{
+
+display:flex; background:var(--card); border:1px solid var(--line);
+
+border-radius:30px; padding:4px; margin:14px 0 6px;
+
+}
+
+.proc-btn{
+
+flex:1; text-align:center; padding:9px 4px; border-radius:26px;
+
+font-size:12.5px; font-weight:600; color:var(--ink-soft); cursor:pointer;
+
+transition:.15s;
+
+}
+
+.proc-btn.active{ background:var(--ink); color:#F4F3EE; }
+
+/* ---------- HOME ---------- */
+
+.greet{ font-size:13px; color:var(--ink-soft); margin-top:14px; }
+
+.greet b{ color:var(--ink); font-weight:600; }
+
+.day-chips{ display:flex; gap:7px; overflow-x:auto; padding:14px 0 4px; }
+
+.day-chips::-webkit-scrollbar{display:none;}
+
+.day-chip{
+
+flex-shrink:0; font-family:'IBM Plex Mono', monospace; font-size:11px;
+
+padding:7px 12px; border-radius:20px; background:var(--card);
+
+border:1px solid var(--line); color:var(--ink-soft); cursor:pointer;
+
+}
+
+.day-chip.active{ background:var(--ink); color:#F4F3EE; border-color:var(--ink); }
+
+.ring-wrap{
+
+display:flex; justify-content:center; margin:14px 0 10px; position:relative;
+
+}
+
+.ring{
+
+width:210px; height:210px; border-radius:50%;
+
+background: conic-gradient(
+
+var(--optimize) 0deg 114deg, transparent 114deg 122deg,
+
+var(--restore) 122deg 236deg, transparent 236deg 244deg,
+
+var(--thrive) 244deg 358deg, transparent 358deg 360deg
+
+);
+
+display:flex; align-items:center; justify-content:center;
+
+position:relative;
+
+}
+
+.ring::after{
+
+content:''; position:absolute; width:158px; height:158px; border-radius:50%;
+
+background:var(--paper);
+
+}
+
+.ring-marker{
+
+position:absolute; width:14px; height:14px; border-radius:50%;
+
+background:var(--optimize); border:3px solid var(--paper);
+
+top:50%; left:50%;
+
+transform: rotate(10deg) translate(105px) rotate(-10deg) translate(-7px,-7px);
+
+box-shadow:0 2px 6px rgba(0,0,0,0.25);
+
+transition: transform .3s ease, background .2s ease;
+
+}
+
+.ring-center{
+
+position:relative; z-index:2; text-align:center;
+
+}
+
+.ring-center .day{
+
+font-family:'Fraunces', serif; font-size:32px; color:var(--ink); font-weight:500;
+
+line-height:1;
+
+}
+
+.ring-center .phase{
+
+font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:2px;
+
+color:var(--optimize); margin-top:6px; text-transform:uppercase; font-weight:500;
+
+}
+
+.ring-center .phase-desc{
+
+font-size:11px; color:var(--ink-soft); margin-top:4px; max-width:150px;
+
+}
+
+.legend{ display:flex; justify-content:center; gap:16px; margin-bottom:18px; }
+
+.legend .dot-label{ display:flex; align-items:center; gap:5px; font-size:10.5px; color:var(--ink-soft); font-family:'IBM Plex Mono', monospace;}
+
+.legend .dot{ width:7px; height:7px; border-radius:50%; }
+
+.task-row{
+
+display:flex; align-items:flex-start; gap:12px; padding:12px 0;
+
+border-top:1px solid var(--line);
+
+}
+
+.task-row:first-of-type{ border-top:none; }
+
+.task-check{
+
+width:20px; height:20px; border-radius:50%; border:1.6px solid var(--ink-soft);
+
+flex-shrink:0; margin-top:1px; cursor:pointer; position:relative; transition:.15s;
+
+}
+
+.task-check.done{ background:var(--thrive); border-color:var(--thrive); }
+
+.task-check.done::after{
+
+content:''; position:absolute; left:6px; top:2px; width:5px; height:9px;
+
+border-right:2px solid white; border-bottom:2px solid white; transform:rotate(40deg);
+
+}
+
+.task-txt .t{ font-size:13.5px; color:var(--ink); font-weight:500; line-height:1.4; }
+
+.task-txt.done .t{ text-decoration:line-through; color:var(--ink-soft); }
+
+.task-txt .m{ font-size:11px; color:var(--ink-soft); margin-top:3px; }
+
+.note-card{
+
+background:var(--ink); border-radius:18px; padding:20px; color:#EDEEE9; margin-bottom:16px;
+
+}
+
+.note-card .sig{ font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:1.5px; color:#9FB0A6; text-transform:uppercase; margin-bottom:8px;}
+
+.note-card p{ font-family:'Fraunces', serif; font-size:15px; line-height:1.55; margin:0; font-style:italic; color:#F1F1EB;}
+
+.note-card .who{ margin-top:12px; font-size:11.5px; color:#9AA6B5; font-family:'Inter',sans-serif; }
+
+/* ---------- JOURNEY ---------- */
+
+.phase-block{ margin-bottom:22px; }
+
+.phase-head{ display:flex; align-items:center; gap:10px; margin-bottom:4px;}
+
+.phase-chip{
+
+font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:2px;
+
+padding:4px 10px; border-radius:20px; font-weight:500; text-transform:uppercase;
+
+}
+
+.phase-head .range{ font-size:11px; color:var(--ink-soft); margin-left:auto; font-family:'IBM Plex Mono', monospace;}
+
+.phase-desc-line{ font-size:12.5px; color:var(--ink-soft); margin:6px 0 12px; line-height:1.5;}
+
+.milestone{
+
+display:flex; gap:12px; position:relative; padding-bottom:16px;
+
+}
+
+.milestone .stem{
+
+width:2px; background:var(--line); position:absolute; left:8px; top:20px; bottom:0;
+
+}
+
+.milestone:last-child .stem{ display:none; }
+
+.m-dot{
+
+width:18px; height:18px; border-radius:50%; flex-shrink:0; border:2px solid var(--line);
+
+background:var(--card); cursor:pointer; z-index:1; margin-top:1px; transition:.15s;
+
+display:flex; align-items:center; justify-content:center;
+
+}
+
+.m-dot.checked{ background:var(--thrive); border-color:var(--thrive); }
+
+.m-dot.checked::after{ content:''; width:5px; height:8px; border-right:2px solid white; border-bottom:2px solid white; transform:rotate(40deg) translate(-1px,-1px);}
+
+.m-body .day{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; color:var(--ink-soft); }
+
+.m-body .txt{ font-size:13px; color:var(--ink); margin-top:2px; font-weight:500; line-height:1.4; }
+
+/* ---------- LEARN ---------- */
+
+.pillar-tag{
+
+display:inline-block; font-family:'IBM Plex Mono', monospace; font-size:9.5px;
+
+letter-spacing:1px; text-transform:uppercase; padding:3px 9px; border-radius:20px;
+
+margin-bottom:9px; font-weight:500;
+
+}
+
+.article-card{ cursor:pointer; padding:0; overflow:hidden; }
+
+.article-banner{ width:100%; height:108px; display:block; }
+
+.article-card-body{ padding:14px 16px 16px; }
+
+.article-card .headline{
+
+font-family:'Fraunces', serif; font-size:16px; color:var(--ink); line-height:1.35; font-weight:500;
+
+}
+
+.article-card .meta{ font-size:11px; color:var(--ink-soft); margin-top:8px; }
+
+.learn-group-label{ font-size:11px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:1.5px; font-family:'IBM Plex Mono', monospace; margin:18px 0 8px; }
+
+.learn-group-label:first-child{ margin-top:4px; }
+
+/* ---------- TRACK ---------- */
+
+.slider-wrap{ margin: 6px 0 4px; }
+
+input[type=range]{ width:100%; accent-color: var(--ink); }
+
+.scale-labels{ display:flex; justify-content:space-between; font-size:10px; color:var(--ink-soft); font-family:'IBM Plex Mono', monospace; margin-top:2px;}
+
+.pain-val{ font-family:'Fraunces', serif; font-size:30px; color:var(--ink); text-align:center; margin:6px 0;}
+
+.bars{ display:flex; align-items:flex-end; gap:6px; height:60px; margin-top:14px;}
+
+.bars .bar{ flex:1; background:var(--optimize-tint); border-radius:4px 4px 0 0; position:relative;}
+
+.bars .bar span{ position:absolute; bottom:-16px; left:0; right:0; text-align:center; font-size:9px; color:var(--ink-soft); font-family:'IBM Plex Mono', monospace;}
+
+.flag-card{ border-color:var(--restore); background:var(--restore-tint); }
+
+.flag-card .eyebrow{ color:var(--restore); }
+
+.flag-card ul{ margin:8px 0 0; padding-left:18px; font-size:12.5px; color:var(--ink); line-height:1.7;}
+
+.med-row{ display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-top:1px solid var(--line); gap:10px; }
+
+.med-row:first-of-type{ border-top:none; }
+
+.med-row .name{ font-size:13px; color:var(--ink); font-weight:500; }
+
+.med-row .dose{ font-size:11px; color:var(--ink-soft); margin-top:2px; }
+
+.med-row .dur{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; color:var(--ink-soft); flex-shrink:0; text-align:right; }
+
+.contact-row{ display:flex; justify-content:space-between; align-items:center; padding:11px 0; border-top:1px solid var(--line); }
+
+.contact-row:first-of-type{ border-top:none; }
+
+.contact-row .who{ font-size:13px; color:var(--ink); font-weight:500; }
+
+.contact-row .what{ font-size:11px; color:var(--ink-soft); margin-top:2px; }
+
+.contact-row .num{ font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--optimize); flex-shrink:0; }
+
+/* ---------- SHOP CARD ---------- */
+
+.shop-card .item{ display:flex; justify-content:space-between; align-items:center; padding:11px 0; border-top:1px solid var(--line); gap:10px;}
+
+.shop-card .item:first-of-type{ border-top:none; }
+
+.shop-card .item .name{ font-size:13px; color:var(--ink); font-weight:500; }
+
+.shop-card .item .sub{ font-size:11px; color:var(--ink-soft); margin-top:2px; }
+
+.shop-link{
+
+font-family:'IBM Plex Mono', monospace; font-size:10.5px; color:var(--ink); background:var(--thrive-tint);
+
+padding:6px 11px; border-radius:16px; text-decoration:none; flex-shrink:0; white-space:nowrap;
+
+}
+
+/* ---------- ARTICLE ART ---------- */
+
+.art-box{ background:var(--optimize-tint); border-radius:14px; padding:14px; margin-bottom:16px; }
+
+.art-caption{ font-size:10.5px; color:var(--ink-soft); text-align:center; margin-top:8px; font-family:'IBM Plex Mono', monospace; }
+
+.evidence-tag{
+
+display:inline-flex; align-items:center; gap:6px; font-size:10.5px; color:var(--restore);
+
+background:var(--restore-tint); padding:5px 10px; border-radius:14px; margin-bottom:14px;
+
+font-family:'IBM Plex Mono', monospace;
+
+}
+
+/* ---------- NOTIFICATION BANNER ---------- */
+
+.notif-banner{
+
+position:absolute; top:-140px; left:10px; right:10px; z-index:80;
+
+background:rgba(22,35,58,0.92); backdrop-filter:blur(6px); border-radius:18px;
+
+padding:13px 15px; display:flex; gap:11px; align-items:flex-start;
+
+transition: top .45s cubic-bezier(.2,.9,.3,1.2);
+
+box-shadow:0 12px 30px rgba(0,0,0,0.3);
+
+}
+
+.notif-banner.show{ top:14px; }
+
+.notif-dot{ width:30px; height:30px; border-radius:9px; background:var(--thrive); flex-shrink:0; display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; color:white; font-size:15px;}
+
+.notif-text .h{ color:#F4F3EE; font-size:12.5px; font-weight:600; }
+
+.notif-text .b{ color:#C7CCD6; font-size:11.5px; margin-top:2px; line-height:1.4; }
+
+.bell-btn{
+
+width:34px; height:34px; border-radius:50%; background:var(--card); border:1px solid var(--line);
+
+display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0;
+
+}
+
+.home-header-row{ display:flex; justify-content:space-between; align-items:center; }
+
+.notif-setting-row{ display:flex; justify-content:space-between; align-items:center; padding:11px 0; border-top:1px solid var(--line); }
+
+.notif-setting-row:first-of-type{ border-top:none; }
+
+.switch{ width:38px; height:22px; border-radius:20px; background:var(--thrive); position:relative; cursor:pointer; flex-shrink:0; }
+
+.switch::after{ content:''; position:absolute; width:18px; height:18px; border-radius:50%; background:white; top:2px; right:2px; transition:.15s; }
+
+.switch.off{ background:var(--line); }
+
+.switch.off::after{ right:18px; }
+
+/* ---------- TRIAGE & MESSAGE BRIDGE ---------- */
+
+.symptom-grid{ display:flex; flex-wrap:wrap; gap:8px; margin:10px 0 4px; }
+
+.symptom-chip{
+
+font-size:12px; padding:8px 13px; border-radius:20px; background:var(--paper);
+
+border:1px solid var(--line); color:var(--ink); cursor:pointer; user-select:none;
+
+}
+
+.symptom-chip.selected{ background:var(--restore); color:white; border-color:var(--restore); }
+
+.triage-result{ margin-top:14px; border-radius:14px; padding:14px; display:none; }
+
+.triage-result.show{ display:block; }
+
+.triage-result.urgent{ background:var(--restore-tint); }
+
+.triage-result.ok{ background:var(--thrive-tint); }
+
+.triage-result .rt{ font-size:13px; color:var(--ink); font-weight:600; margin-bottom:4px; }
+
+.triage-result .rb{ font-size:12px; color:var(--ink-soft); line-height:1.5; }
+
+.triage-cta{
+
+display:inline-block; margin-top:10px; font-family:'IBM Plex Mono', monospace; font-size:11px;
+
+padding:8px 14px; border-radius:16px; background:var(--ink); color:#F4F3EE; cursor:pointer;
+
+}
+
+/* ---------- STREAK / ADHERENCE ---------- */
+
+.streak-row{ display:flex; align-items:center; gap:10px; margin:12px 0 18px; }
+
+.streak-badge{
+
+background:var(--ink); color:#F4F3EE; border-radius:14px; padding:8px 14px;
+
+display:flex; align-items:center; gap:7px; font-size:12.5px; font-weight:600;
+
+}
+
+.badge-row{ display:flex; gap:8px; }
+
+.badge-dot{
+
+width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+
+font-size:13px; background:var(--line); color:var(--ink-soft);
+
+}
+
+.badge-dot.earned{ background:var(--thrive); color:white; }
+
+.adherence-bar-track{ height:8px; background:var(--paper); border-radius:6px; overflow:hidden; margin-top:8px; }
+
+.adherence-bar-fill{ height:100%; background:var(--thrive); border-radius:6px; }
+
+.adherence-label{ display:flex; justify-content:space-between; font-size:11px; color:var(--ink-soft); margin-top:6px; font-family:'IBM Plex Mono', monospace; }
+
+/* ---------- MOVE / EXERCISES ---------- */
+
+.move-phase-tabs{ display:flex; gap:8px; margin:14px 0 18px; }
+
+.move-phase-tab{
+
+flex:1; text-align:center; padding:9px 4px; border-radius:20px; font-size:11.5px;
+
+font-weight:600; cursor:pointer; border:1px solid var(--line); color:var(--ink-soft); background:var(--card);
+
+}
+
+.move-phase-tab.active-opt{ background:var(--optimize); color:white; border-color:var(--optimize); }
+
+.move-phase-tab.active-res{ background:var(--restore); color:white; border-color:var(--restore); }
+
+.move-phase-tab.active-thr{ background:var(--thrive); color:white; border-color:var(--thrive); }
+
+.ex-card{ display:flex; gap:14px; padding:16px; }
+
+.ex-art{ width:64px; height:64px; flex-shrink:0; background:var(--paper); border-radius:14px; display:flex; align-items:center; justify-content:center; }
+
+/* ---------- LEARN HERO ART (prominent, not a tiny icon) ---------- */
+
+.art-hero{
+
+width:100%; height:190px; border-radius:16px; display:flex; align-items:center; justify-content:center;
+
+margin-bottom:12px; position:relative; overflow:hidden;
+
+}
+
+.art-hero svg{ width:92%; height:88%; position:relative; z-index:2; }
+
+.art-hero::before{
+
+content:''; position:absolute; inset:0; opacity:0.55;
+
+background-image: radial-gradient(circle at 25% 30%, rgba(255,255,255,0.5), transparent 55%);
+
+}
+
+.art-hero-overlay{ width:100%; height:235px; border-radius:18px 18px 0 0; margin:-18px -22px 16px; width:calc(100% + 44px); }
+
+.art-hero-overlay svg{ width:94%; height:90%; }
+
+.ex-art svg, .art-box svg{ width:60%; height:60%; }
+
+.ex-body{ flex:1; min-width:0; }
+
+.ex-name{ font-family:'Fraunces', serif; font-size:15.5px; color:var(--ink); font-weight:500; }
+
+.ex-purpose{ font-size:11px; color:var(--ink-soft); margin-top:2px; }
+
+.ex-meta-row{ display:flex; align-items:center; gap:10px; margin-top:10px; }
+
+.ex-dose{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; color:var(--ink); background:var(--optimize-tint); padding:5px 10px; border-radius:12px; }
+
+.ex-check{
+
+width:22px; height:22px; border-radius:50%; border:1.6px solid var(--ink-soft); flex-shrink:0;
+
+cursor:pointer; position:relative; margin-left:auto;
+
+}
+
+.ex-check.done{ background:var(--thrive); border-color:var(--thrive); }
+
+.ex-check.done::after{ content:''; position:absolute; left:7px; top:3px; width:5px; height:10px; border-right:2px solid white; border-bottom:2px solid white; transform:rotate(40deg); }
+
+.ex-steps{ font-size:12px; color:#2C3648; line-height:1.7; margin-top:10px; padding-left:18px; }
+
+.ex-timer-row{ display:flex; align-items:center; gap:10px; margin-top:10px; }
+
+.ex-timer-btn{
+
+font-family:'IBM Plex Mono', monospace; font-size:11px; padding:7px 13px; border-radius:14px;
+
+background:var(--ink); color:#F4F3EE; cursor:pointer;
+
+}
+
+.ex-timer-display{ font-family:'Fraunces', serif; font-size:18px; color:var(--ink); }
+
+.move-note{ font-size:11.5px; color:var(--ink-soft); line-height:1.6; margin:16px 0 4px; padding:14px; background:var(--card); border:1px solid var(--line); border-radius:14px; }
+
+.walk-target{ display:flex; align-items:baseline; gap:8px; padding:10px 0; border-top:1px solid var(--line); }
+
+.walk-target:first-of-type{ border-top:none; }
+
+.walk-target .wk{ font-size:12px; color:var(--ink-soft); width:88px; flex-shrink:0; }
+
+.walk-target .wv{ font-family:'Fraunces', serif; font-size:15px; color:var(--ink); }
+
+.walk-target .wv span{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; color:var(--ink-soft); margin-left:4px; }
+
+/* ---------- MEDS TAB ---------- */
+
+.med-time-head{ display:flex; align-items:center; gap:8px; margin:20px 0 8px; }
+
+.med-time-head:first-child{ margin-top:4px; }
+
+.med-time-dot{ width:7px; height:7px; border-radius:50%; background:var(--restore); }
+
+.med-time-label{ font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:1.5px; color:var(--ink); text-transform:uppercase; }
+
+.remind-pill{
+
+margin-left:auto; display:flex; align-items:center; gap:6px; padding:6px 12px; border-radius:16px;
+
+background:var(--restore-tint); color:var(--restore); font-family:'IBM Plex Mono', monospace;
+
+font-size:10px; font-weight:600; letter-spacing:0.4px; cursor:pointer; text-transform:none;
+
+}
+
+.remind-pill svg{ width:12px; height:12px; flex-shrink:0; }
+
+.pill-row{ display:flex; align-items:center; gap:12px; padding:12px 0; border-top:1px solid var(--line); }
+
+.pill-row:first-of-type{ border-top:none; }
+
+.pill-check{
+
+width:22px; height:22px; border-radius:7px; border:1.6px solid var(--ink-soft); flex-shrink:0;
+
+cursor:pointer; position:relative;
+
+}
+
+.pill-check.done{ background:var(--thrive); border-color:var(--thrive); }
+
+.pill-check.done::after{ content:''; position:absolute; left:6px; top:3px; width:6px; height:11px; border-right:2px solid white; border-bottom:2px solid white; transform:rotate(40deg); }
+
+.pill-name{ font-size:13.5px; color:var(--ink); font-weight:500; }
+
+.pill-dose{ font-size:11px; color:var(--ink-soft); margin-top:2px; }
+
+.pill-status{ margin-left:auto; font-family:'IBM Plex Mono', monospace; font-size:9.5px; color:var(--ink-soft); background:var(--paper); padding:4px 8px; border-radius:10px; white-space:nowrap; flex-shrink:0; }
+
+.optional-med-row{ display:flex; justify-content:space-between; padding:11px 0; border-top:1px solid var(--line); }
+
+.optional-med-row:first-of-type{ border-top:none; }
+
+.optional-med-row .n{ font-size:12.5px; color:var(--ink); font-weight:500; }
+
+.optional-med-row .d{ font-size:10.5px; color:var(--ink-soft); margin-top:2px; }
+
+/* ---------- NAV ---------- */
+
+.tabbar{
+
+position:absolute; bottom:0; left:0; right:0; height:82px;
+
+padding-bottom:calc(18px + env(safe-area-inset-bottom));
+
+background:rgba(239,241,236,0.9); backdrop-filter:blur(10px);
+
+border-top:1px solid var(--line);
+
+display:flex; z-index:40;
+
+}
+
+.tab{
+
+flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+
+gap:3px; color:var(--ink-soft); cursor:pointer; padding-top:10px;
+
+}
+
+.tab.active{ color:var(--ink); }
+
+.tab svg{ width:17px; height:17px; }
+
+.tab span{ font-size:7.5px; font-family:'IBM Plex Mono', monospace; letter-spacing:0.2px; }
+
+/* ---------- OVERLAY (article detail) ---------- */
+
+.overlay{
+
+position:absolute; inset:0; background:var(--paper); z-index:60;
+
+transform:translateY(100%); transition:transform .28s ease;
+
+display:flex; flex-direction:column;
+
+}
+
+.overlay.open{ transform:translateY(0); }
+
+.overlay-head{ padding:20px 22px 0; flex-shrink:0; }
+
+.overlay-close{
+
+width:32px; height:32px; border-radius:50%; background:var(--card);
+
+border:1px solid var(--line); display:flex; align-items:center; justify-content:center;
+
+cursor:pointer; margin-bottom:18px;
+
+}
+
+.overlay-body{ padding:0 22px 60px; overflow-y:auto; }
+
+.overlay-body h2{ font-family:'Fraunces', serif; font-size:22px; font-weight:500; color:var(--ink); line-height:1.3; margin:0 0 14px;}
+
+.overlay-body p{ font-size:14px; line-height:1.75; color:#2C3648; }
+
+#ovBody{ font-size:14px; line-height:1.75; color:#2C3648; }
+
+</style>
+
+</head>
+
+<body>
+
+<div class="device">
+
+<div class="notch"></div>
+
+<div class="notif-banner" id="notifBanner">
+
+<div class="notif-dot">S</div>
+
+<div class="notif-text">
+
+<div class="h" id="notifHead">Siddiqi 360</div>
+
+<div class="b" id="notifBody">Reminder text appears here</div>
+
+</div>
+
+</div>
+
+<!-- SPLASH -->
+
+<div class="screen active" id="splash" style="position:absolute; inset:0; z-index:45;">
+
+<svg width="64" height="64" viewBox="0 0 200 200" style="margin-bottom:18px;">
+
+<defs><clipPath id="sq"><path d="M100 4 C170 4 196 30 196 100 C196 170 170 196 100 196 C30 196 4 170 4 100 C4 30 30 4 100 4Z"/></clipPath></defs>
+
+<g clip-path="url(#sq)"><rect width="200" height="200" fill="#20304A"/></g>
+
+<circle cx="100" cy="100" r="58" fill="none" stroke="#3E5C76" stroke-width="13" stroke-dasharray="109 12" stroke-dashoffset="-6" stroke-linecap="round" transform="rotate(-90 100 100)"/>
+
+<circle cx="100" cy="100" r="58" fill="none" stroke="#A85D3B" stroke-width="13" stroke-dasharray="109 12" stroke-dashoffset="-121" stroke-linecap="round" transform="rotate(-90 100 100)"/>
+
+<circle cx="100" cy="100" r="58" fill="none" stroke="#5C7A5C" stroke-width="13" stroke-dasharray="109 12" stroke-dashoffset="-236" stroke-linecap="round" transform="rotate(-90 100 100)"/>
+
+<circle cx="100" cy="100" r="30" fill="#F4F3EE"/>
+
+<g transform="translate(85,77) scale(0.85)" fill="none" stroke="#16233A" stroke-linecap="round">
+
+<circle cx="23" cy="6" r="4" fill="#16233A" stroke="none"/>
+
+<path d="M21 10 L15 23" stroke-width="6"/>
+
+<path d="M15 23 L5 13" stroke-width="5.5"/>
+
+<path d="M5 13 L3 6" stroke-width="4"/>
+
+<path d="M15 23 L21 30" stroke-width="5.5"/>
+
+<path d="M21 30 L19 40" stroke-width="4.5"/>
+
+<path d="M20 11 L27 14" stroke-width="3.5"/>
+
+<path d="M20 11 L13 8" stroke-width="3.5"/>
+
+</g>
+
+</svg>
+
+<div class="mark">Siddiqi<span> 360</span><span style="font-size:14px; vertical-align:top; color:#9FB0A6; margin-left:2px;">™</span></div>
+
+<div class="tagline">Optimize · Restore · Thrive</div>
+
+<div class="sub">Your perioperative journey, guided day by day, from your surgeon.</div>
+
+<button onclick="goTo('signin')">Begin</button>
+
+</div>
+
+<div class="screen" id="signin" style="position:absolute; inset:0; z-index:44; background:var(--paper); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0 36px; text-align:center;">
+
+<div style="width:52px; height:52px; border-radius:16px; background:var(--ink); display:flex; align-items:center; justify-content:center; margin-bottom:22px;">
+
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F4F3EE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 21 6 21 12c0 5-3.5 8.5-9 10-5.5-1.5-9-5-9-10L3 6z"/></svg>
+
+</div>
+
+<div style="font-family:'Fraunces',serif; font-size:20px; color:var(--ink); font-weight:500;">This app is for Dr. Siddiqi's patients</div>
+
+<div style="font-size:12.5px; color:var(--ink-soft); margin-top:10px; line-height:1.6;">Access is by invitation only, for patients with a scheduled surgery date at TCJR. Enter the code from your surgical packet or the text message our office sent you.</div>
+
+<input id="accessCode" type="text" placeholder="Access code" style="margin-top:24px; width:100%; padding:14px 16px; border-radius:14px; border:1px solid var(--line); background:var(--card); font-family:'IBM Plex Mono', monospace; font-size:14px; text-align:center; letter-spacing:2px; color:var(--ink);">
+
+<div style="font-size:11px; color:var(--ink-soft); margin-top:16px; text-align:left; width:100%;">Your surgery date</div>
+
+<input id="surgeryDateInput" type="date" style="margin-top:6px; width:100%; padding:14px 16px; border-radius:14px; border:1px solid var(--line); background:var(--card); font-family:'IBM Plex Mono', monospace; font-size:13px; color:var(--ink);">
+
+<div id="signinError" style="font-size:11.5px; color:var(--restore); margin-top:10px; height:14px;"></div>
+
+<button onclick="attemptSignin()" style="margin-top:16px; background:var(--ink); color:#F4F3EE; border:none; padding:14px 30px; border-radius:30px; font-size:14px; font-weight:600; font-family:'Inter',sans-serif; cursor:pointer; width:100%;">Continue</button>
+
+<div style="font-size:11px; color:var(--ink-soft); margin-top:18px;">Not a patient yet? <a href="https://teamsiddiqiortho.com/contact-us/" target="_blank" rel="noopener" style="color:var(--ink);">Request a consultation</a></div>
+
+</div>
+
+<div class="status" style="position:relative; z-index:10;">
+
+<span>9:41</span>
+
+<span>Siddiqi 360</span>
+
+</div>
+
+<div class="screens">
+
+<!-- HOME -->
+
+<div class="screen" id="home">
+
+<div class="home-header-row">
+
+<div>
+
+<div class="eyebrow">Home</div>
+
+<div class="greet">Welcome back, <b>Michael</b></div>
+
+</div>
+
+<div class="bell-btn" onclick="previewNotification()">
+
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16233A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+
+</div>
+
+</div>
+
+<div class="proc-toggle">
+
+<div class="proc-btn" data-proc="hip" onclick="setProcedure('hip')">Hip · Direct Anterior</div>
+
+<div class="proc-btn" data-proc="knee" onclick="setProcedure('knee')">Knee · Muscle-Sparing</div>
+
+</div>
+
+<div class="day-chips" id="dayChips"></div>
+
+<div class="ring-wrap">
+
+<div class="ring">
+
+<div class="ring-marker" id="ringMarker"></div>
+
+<div class="ring-center">
+
+<div class="day" id="ringDay">−18</div>
+
+<div class="phase" id="ringPhase">Optimize</div>
+
+<div class="phase-desc" id="ringDesc">days until surgery</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="legend">
+
+<div class="dot-label"><span class="dot" style="background:var(--optimize)"></span>Optimize</div>
+
+<div class="dot-label"><span class="dot" style="background:var(--restore)"></span>Restore</div>
+
+<div class="dot-label"><span class="dot" style="background:var(--thrive)"></span>Thrive</div>
+
+</div>
+
+<div class="streak-row">
+
+<div class="streak-badge">
+
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F4F3EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+
+0 day streak
+
+</div>
+
+<div class="badge-row">
+
+<div class="badge-dot">·</div>
+
+<div class="badge-dot">·</div>
+
+<div class="badge-dot">·</div>
+
+<div class="badge-dot">·</div>
+
+</div>
+
+</div>
+
+<div class="eyebrow" style="margin-bottom:8px;">Today</div>
+
+<div class="card" id="taskCard"></div>
+
+<div id="shopSection"></div>
+
+<div class="eyebrow" style="margin-bottom:8px;">From Dr. Siddiqi</div>
+
+<div class="note-card">
+
+<div class="sig">Recovery Pearl</div>
+
+<p>One thing I've learned treating hundreds of joints. The patients who do best are not always the ones in the best shape going in. They are the ones who understand what to expect at each stage.</p>
+
+<div class="who">Dr. Ahmed Siddiqi</div>
+
+</div>
+
+</div>
+
+<!-- JOURNEY -->
+
+<div class="screen" id="journey">
+
+<h1 class="page-title">Your Journey</h1>
+
+<div class="page-sub" id="journeySub">Every stage of your Direct Anterior hip replacement, from preparation to full recovery.</div>
+
+<div class="phase-block">
+
+<div class="phase-head">
+
+<span class="phase-chip" style="background:var(--optimize-tint); color:var(--optimize);">Optimize</span>
+
+<span class="range">4 weeks before → Day 0</span>
+
+</div>
+
+<div class="phase-desc-line">Preparing the body to heal, before you ever reach the OR.</div>
+
+<div id="opt-milestones"></div>
+
+</div>
+
+<div class="phase-block">
+
+<div class="phase-head">
+
+<span class="phase-chip" style="background:var(--restore-tint); color:var(--restore);">Restore</span>
+
+<span class="range">Day 0 → Day 14</span>
+
+</div>
+
+<div class="phase-desc-line">Protecting the repair and getting you moving safely.</div>
+
+<div id="res-milestones"></div>
+
+</div>
+
+<div class="phase-block">
+
+<div class="phase-head">
+
+<span class="phase-chip" style="background:var(--thrive-tint); color:var(--thrive);">Thrive</span>
+
+<span class="range">Day 14 → Month 3+</span>
+
+</div>
+
+<div class="phase-desc-line">Regaining strength, and the precautions that carry forward for life.</div>
+
+<div id="thr-milestones"></div>
+
+</div>
+
+</div>
+
+<!-- MOVE -->
+
+<div class="screen" id="move">
+
+<h1 class="page-title">Move</h1>
+
+<div class="page-sub">Your exercises, matched to where you are in recovery.</div>
+
+<div class="card" id="walkCard" style="border-color:var(--restore);">
+
+<div class="eyebrow" style="color:var(--restore); margin-bottom:6px;">Draft · needs your numbers</div>
+
+<div style="font-family:'Fraunces',serif; font-size:16px; color:var(--ink); margin-bottom:4px;">Walking &amp; step count protocol</div>
+
+<div style="font-size:11.5px; color:var(--ink-soft); line-height:1.6; margin-bottom:12px;">Your packet says "just focus on walking," with no specific step targets, and warns against overdoing activity early. I built placeholder targets below so you can see the shape of it, but these are not your real numbers. Send me what you actually want here and I'll lock them in.</div>
+
+<div id="walkTargetRow"></div>
+
+</div>
+
+<div class="move-phase-tabs" id="movePhaseTabs"></div>
+
+<div id="exerciseList"></div>
+
+<div class="move-note" id="moveNote"></div>
+
+</div>
+
+<!-- MEDS -->
+
+<div class="screen" id="meds">
+
+<h1 class="page-title">Medications</h1>
+
+<div class="page-sub" id="medsSub">Vitamins start Day −30, ENROUTE runs 2 weeks before to 2 weeks after surgery, and your prescription schedule runs through Day 28.</div>
+
+<div class="card" id="notifPermCard" style="display:none; border-color:var(--optimize);">
+
+<div style="display:flex; align-items:center; gap:12px;">
+
+<div class="bell-btn" style="flex-shrink:0;">
+
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#16233A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+
+</div>
+
+<div style="flex:1;">
+
+<div style="font-size:13px; font-weight:600; color:var(--ink);">Turn on real reminders</div>
+
+<div style="font-size:11px; color:var(--ink-soft); margin-top:2px;">Get an actual notification from this device at each scheduled time, while the app is open.</div>
+
+</div>
+
+</div>
+
+<div class="triage-cta" style="margin-top:12px; display:inline-block;" onclick="enableRealReminders()">Turn on</div>
+
+</div>
+
+<div id="notifStatusNote" style="display:none; font-size:11px; color:var(--ink-soft); margin:-6px 0 14px; padding-left:2px;"></div>
+
+<div id="medSchedule"></div>
+
+<div class="card" style="margin-top:8px;">
+
+<div class="eyebrow" style="margin-bottom:6px;">If prescribed for you</div>
+
+<div id="optionalMeds"></div>
+
+</div>
+
+<div class="card">
+
+<div class="eyebrow" style="margin-bottom:6px;">Need a refill?</div>
+
+<div style="font-size:12.5px; color:var(--ink-soft); line-height:1.6;">Call our medical assistant at least 3 business days before you run out. 972-608-8868.</div>
+
+</div>
+
+</div>
+
+<!-- LEARN -->
+
+<div class="screen" id="learn">
+
+<h1 class="page-title">Learn</h1>
+
+<div class="page-sub">Notes from Dr. Siddiqi, organized by topic.</div>
+
+<div id="article-list"></div>
+
+</div>
+
+<!-- TRACK -->
+
+<div class="screen" id="track">
+
+<h1 class="page-title">Track</h1>
+
+<div class="page-sub">A short daily check in helps us catch problems early.</div>
+
+<div class="card">
+
+<div class="eyebrow" style="margin-bottom:2px;">This week's adherence</div>
+
+<div class="adherence-bar-track"><div class="adherence-bar-fill" style="width:86%;"></div></div>
+
+<div class="adherence-label"><span>12 of 14 tasks</span><span>86%</span></div>
+
+</div>
+
+<div class="card">
+
+<div class="eyebrow">Quick symptom check</div>
+
+<div class="symptom-grid" id="symptomGrid"></div>
+
+<div class="triage-result" id="triageResult">
+
+<div class="rt" id="triageTitle"></div>
+
+<div class="rb" id="triageBody"></div>
+
+<div class="triage-cta" id="triageCta" onclick="goTo('learn')" style="display:none;">Read: what's normal recovery</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="eyebrow">Pain today</div>
+
+<div class="pain-val" id="painVal">3</div>
+
+<div class="slider-wrap">
+
+<input type="range" min="0" max="10" value="3" id="painSlider" oninput="document.getElementById('painVal').textContent=this.value; demoState.pain=Number(this.value); saveState();">
+
+<div class="scale-labels"><span>0 · none</span><span>10 · severe</span></div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="eyebrow" style="margin-bottom:10px;">Pain, last 7 days</div>
+
+<div class="bars" id="painBars"></div>
+
+</div>
+
+<div class="card">
+
+<div class="eyebrow" style="margin-bottom:8px;">Mandatory medications</div>
+
+<div id="medList"></div>
+
+</div>
+
+<div class="card flag-card">
+
+<div class="eyebrow">When to call the office</div>
+
+<ul>
+
+<li>Worsening pain, or new numbness or weakness</li>
+
+<li>Wound redness that is spreading, or drainage</li>
+
+<li>Fever above 101°F, or chills</li>
+
+<li>New calf pain or swelling</li>
+
+</ul>
+
+</div>
+
+<div class="card">
+
+<div class="eyebrow" style="margin-bottom:6px;">Reminders</div>
+
+<div class="notif-setting-row">
+
+<div><div class="who" style="font-size:13px; color:var(--ink); font-weight:500;">Task reminders</div><div class="what" style="font-size:11px; color:var(--ink-soft);">Nudges for meds, washes, appointments</div></div>
+
+<div class="switch" id="switchTasks" onclick="toggleSwitch(this)"></div>
+
+</div>
+
+<div class="notif-setting-row">
+
+<div><div class="who" style="font-size:13px; color:var(--ink); font-weight:500;">Appointment reminders</div><div class="what" style="font-size:11px; color:var(--ink-soft);">Heads up before your scheduled visits</div></div>
+
+<div class="switch" id="switchTeam" onclick="toggleSwitch(this)"></div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="eyebrow" style="margin-bottom:6px;">Your progress</div>
+
+<div style="font-size:11.5px; color:var(--ink-soft); line-height:1.6; margin-bottom:10px;">Checkmarks and pain logs are saved on this device only. Reset to start completely blank.</div>
+
+<div id="resetBtn" onclick="resetProgress()" style="text-align:center; padding:11px; border-radius:12px; background:var(--restore-tint); color:var(--restore); font-size:12.5px; font-weight:600; cursor:pointer;">Reset all progress</div>
+
+</div>
+
+<div class="card">
+
+<div class="eyebrow" style="margin-bottom:6px;">Your care team</div>
+
+<div class="contact-row"><div><div class="who">Office · clinical questions, refills</div><div class="what">Cindy Nichols</div></div><div class="num">972-608-8868</div></div>
+
+<div class="contact-row"><div><div class="who">Triage nurse · urgent concerns</div><div class="what">Robin Fleck, RN</div></div><div class="num">972-608-8868</div></div>
+
+<div class="contact-row"><div><div class="who">1 & 2 week post-op</div><div class="what">Taylor Wade, RN</div></div><div class="num">972-608-8868</div></div>
+
+<div class="contact-row"><div><div class="who">6 week recovery eval</div><div class="what">Cindy Ayers-Winnubst, PT</div></div><div class="num">972-608-8868</div></div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ARTICLE OVERLAY -->
+
+<div class="overlay" id="overlay">
+
+<div class="overlay-head">
+
+<div class="overlay-close" onclick="closeArticle()">
+
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16233A" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+
+</div>
+
+</div>
+
+<div class="overlay-body">
+
+<div class="art-hero art-hero-overlay" id="ovArt" style="display:none;"></div>
+
+<span class="pillar-tag" id="ovTag"></span>
+
+<h2 id="ovTitle"></h2>
+
+<div class="evidence-tag" id="ovEvidence" style="display:none;"></div>
+
+<div id="ovBody"></div>
+
+</div>
+
+</div>
+
+<!-- TAB BAR -->
+
+<div class="tabbar">
+
+<div class="tab active" data-tab="home" onclick="goTo('home')">
+
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>
+
+<span>HOME</span>
+
+</div>
+
+<div class="tab" data-tab="journey" onclick="goTo('journey')">
+
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8 17c4-1 6-5 8-9"/></svg>
+
+<span>JOURNEY</span>
+
+</div>
+
+<div class="tab" data-tab="move" onclick="goTo('move')">
+
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5 4 4"/><circle cx="18" cy="5" r="2"/><path d="m14 22-3-6 3-3-2-4"/><path d="M9 9 6 6 3 8"/><path d="M9 9c0 3 2 3 3 4"/><path d="m17 8 3 3-3 5"/></svg>
+
+<span>MOVE</span>
+
+</div>
+
+<div class="tab" data-tab="meds" onclick="goTo('meds')">
+
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="2"/><path d="M17 3a4 4 0 0 1 4 4v4h-8V7a4 4 0 0 1 4-4Z"/><rect x="13" y="13" width="8" height="8" rx="2"/><path d="M7 21a4 4 0 0 1-4-4v-4h8v4a4 4 0 0 1-4 4Z"/></svg>
+
+<span>MEDS</span>
+
+</div>
+
+<div class="tab" data-tab="learn" onclick="goTo('learn')">
+
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H12v16H5.5A1.5 1.5 0 0 1 4 18.5V5.5Z"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H12v16h6.5a1.5 1.5 0 0 0 1.5-1.5V5.5Z"/></svg>
+
+<span>LEARN</span>
+
+</div>
+
+<div class="tab" data-tab="track" onclick="goTo('track')">
+
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l4-7 4 4 5-9 5 6"/></svg>
+
+<span>TRACK</span>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+let procedure = 'hip'; // 'hip' | 'knee'
+
+let currentDayIndex = 3; // index into dayPoints
+
+const dayPoints = [
+
+{day:-30, label:'−30', phase:'optimize', angle:8, desc:'days until surgery'},
+
+{day:-14, label:'−14', phase:'optimize', angle:45, desc:'days until surgery'},
+
+{day:-7, label:'−7', phase:'optimize', angle:72, desc:'days until surgery'},
+
+{day:-2, label:'−2', phase:'optimize', angle:100,desc:'days until surgery'},
+
+{day:0, label:'0', phase:'restore', angle:128,desc:'surgery day'},
+
+{day:2, label:'+2', phase:'restore', angle:150,desc:'days since surgery'},
+
+{day:7, label:'+7', phase:'restore', angle:185,desc:'days since surgery'},
+
+{day:14, label:'+14', phase:'restore', angle:228,desc:'days since surgery'},
+
+{day:28, label:'+28', phase:'thrive', angle:258,desc:'days since surgery'},
+
+{day:42, label:'+42', phase:'thrive', angle:280,desc:'days since surgery'},
+
+{day:90, label:'+90', phase:'thrive', angle:335,desc:'days since surgery'},
+
+];
+
+const phaseColor = {optimize:'var(--optimize)', restore:'var(--restore)', thrive:'var(--thrive)'};
+
+const phaseLabel = {optimize:'Optimize', restore:'Restore', thrive:'Thrive'};
+
+// Today's tasks keyed by day value, procedure-agnostic unless overridden
+
+const taskMap = {
+
+'-30': [
+
+{t:'Start daily supplements: iron 65mg, vitamin C 1000mg, magnesium/zinc/vitamin D', m:'Nutrition · Optimize'},
+
+{t:'If on rheumatoid arthritis medication, confirm hold schedule with your prescribing physician', m:'Medication'},
+
+{t:'Stop smoking, at least 30 days before surgery', m:'Prep'},
+
+],
+
+'-14': [
+
+{t:'Stop all herbal medications, vitamin E, vitamin K, and fish oil', m:'Medication'},
+
+{t:'Pick up Chlorhexidine (Hibiclens) solution from the pharmacy', m:'Prep'},
+
+{t:'Start Enroute protein supplement, twice daily', m:'Nutrition'},
+
+],
+
+'-7': [
+
+{t:'Stop blood thinners as directed by your clearing physician', m:'Medication · Warfarin/Plavix/Brilinta 7 days, Eliquis/Xarelto 3 days'},
+
+{t:'Begin Mupirocin ointment in both nostrils, twice daily for 5 days', m:'Infection prevention'},
+
+],
+
+'-2': [
+
+{t:'Do not shave the surgical site', m:'Prep'},
+
+{t:'Drink three 20oz cups of clear liquids daily through surgery day', m:'Nutrition'},
+
+{t:'Wash with Chlorhexidine solution tonight', m:'Infection prevention'},
+
+],
+
+'0': [
+
+{t:'No jewelry, no makeup, nail polish OK except red', m:'Day of surgery'},
+
+{t:'Bring photo ID, insurance card, loose fitted clothing, non-skid shoes', m:'Day of surgery'},
+
+{t:'Take only your normal blood pressure medication, with a small sip of water', m:'Medication'},
+
+],
+
+'2': [
+
+{t:'QR Recovery Box delivered: cryotherapy/compression, TENS, EdemaWear, collagen dressings', m:'Delivery'},
+
+{t:'OK to shower with dressing covered', m:'Wound care'},
+
+{t:'Elevate operative leg 30 to 60 minutes, 4 to 5 times a day', m:'Recovery'},
+
+],
+
+'7': [
+
+{t:'Phone check-in with Taylor Wade, RN or TCJR team', m:'Care team'},
+
+{t:'Continue mandatory medication schedule', m:'Medication'},
+
+],
+
+'14': [
+
+{t:'Post-op visit with Taylor Wade, RN: incision check, dressing removed', m:'Visit'},
+
+{t:'Office advises walker advancement', m:'Activity'},
+
+],
+
+'28': [
+
+{t:'Begin weaning narcotics to Tylenol as comfortable', m:'Medication'},
+
+{t:'Lotions and creams still restricted on incision until week 8', m:'Wound care'},
+
+],
+
+'42': [
+
+{t:'Comprehensive recovery evaluation with Cindy Ayers-Winnubst, PT', m:'Visit'},
+
+{t:'Most patients cleared to drive by now, if off narcotics', m:'Milestone'},
+
+],
+
+'90': [
+
+{t:'Expected return to work by this point', m:'Milestone'},
+
+{t: procedure==='hip' ? 'Hip precautions end at 3 months' : 'Full activity progression continues under PT guidance', m:'Milestone'},
+
+],
+
+};
+
+function renderDayChips(){
+
+const wrap = document.getElementById('dayChips');
+
+wrap.innerHTML = dayPoints.map((d,i)=>`<div class="day-chip ${i===currentDayIndex?'active':''}" onclick="setDay(${i})">Day ${d.label}</div>`).join('');
+
+}
+
+function setDay(i){
+
+currentDayIndex = i;
+
+const d = dayPoints[i];
+
+document.getElementById('ringDay').textContent = d.label;
+
+document.getElementById('ringPhase').textContent = phaseLabel[d.phase];
+
+document.getElementById('ringPhase').style.color = phaseColor[d.phase];
+
+document.getElementById('ringDesc').textContent = d.desc;
+
+const marker = document.getElementById('ringMarker');
+
+marker.style.background = phaseColor[d.phase];
+
+marker.style.transform = `rotate(${d.angle}deg) translate(105px) rotate(-${d.angle}deg) translate(-7px,-7px)`;
+
+renderDayChips();
+
+renderTasks(d.day);
+
+renderShop(d.day);
+
+renderMedSchedule();
+
+renderWalkTargets(d.day);
+
+}
+
+function renderTasks(day){
+
+const tasks = taskMap[String(day)] || [];
+
+document.getElementById('taskCard').innerHTML = tasks.map((task,i)=>{
+
+const tid = 'task-'+day+'-'+i;
+
+return `
+
+<div class="task-row">
+
+<div class="task-check" data-task-id="${tid}" onclick="toggleTask(this)"></div>
+
+<div class="task-txt"><div class="t">${task.t}</div><div class="m">${task.m}</div></div>
+
+</div>
+
+`}).join('');
+
+applyPersistedChecks();
+
+}
+
+function toggleTask(el){
+
+el.classList.toggle('done');
+
+el.nextElementSibling.classList.toggle('done');
+
+const id = el.dataset.taskId;
+
+if(id){ demoState.tasks[id] = el.classList.contains('done'); saveState(); }
+
+}
+
+// -------- JOURNEY MILESTONES --------
+
+const milestonesShared = {
+
+opt: [
+
+{day:'4 weeks before', txt:'Start daily supplement protocol: iron, vitamin C, magnesium/zinc/vitamin D', checked:false},
+
+{day:'3 weeks before', txt:'Pre-admission testing and labs ordered by the hospital', checked:false},
+
+{day:'2 weeks before', txt:'Stop herbal supplements, vitamin E, vitamin K, fish oil; start Enroute protein', checked:false},
+
+{day:'1 week before', txt:'Stop blood thinners per your clearing physician\u2019s instructions', checked:false},
+
+{day:'5 days before', txt:'Begin Mupirocin nasal ointment, twice daily', checked:false},
+
+{day:'2 days before', txt:'No shaving surgical site; begin clear liquid hydration protocol', checked:false},
+
+{day:'Night before', txt:'Final Chlorhexidine wash; arrival time confirmation call', checked:false},
+
+],
+
+res: [
+
+{day:'Day 0', txt:'Surgery day, discharge planned same day', checked:false},
+
+{day:'Day 1', txt:'Mandatory medication schedule begins', checked:false},
+
+{day:'Day 2', txt:'QR Recovery Box delivered; shower with dressing covered permitted', checked:false},
+
+{day:'Day 7', txt:'Phone check-in with Taylor Wade, RN', checked:false},
+
+{day:'Day 14', txt:'Post-op visit, incision check, hospital dressing removed', checked:false},
+
+],
+
+thr: [
+
+{day:'Day 21', txt:'Outpatient physical therapy in progress, 2 to 3 times weekly', checked:false},
+
+{day:'Day 28', txt:'Begin weaning off narcotic pain medication', checked:false},
+
+{day:'Day 42', txt:'Comprehensive recovery evaluation with Cindy Ayers-Winnubst, PT', checked:false},
+
+{day:'Week 8 to 12', txt:'Expected return to work window', checked:false},
+
+{day:'Lifetime', txt:'Antibiotic prophylaxis required before dental and invasive procedures', checked:false},
+
+],
+
+};
+
+const milestonesHipExtra = {opt:{idx:6, add:null}, thr:{insertAt:3, item:{day:'Month 3', txt:'Hip precautions end: full extension and rotation restored', checked:false}}};
+
+const milestonesKneeExtra = {thr:{insertAt:0, item:{day:'Day 14+', txt:'Kneeling is not restricted; a padded surface may help with comfort', checked:false}}};
+
+function buildMilestones(){
+
+const m = JSON.parse(JSON.stringify(milestonesShared));
+
+if(procedure==='hip'){
+
+m.thr.splice(milestonesHipExtra.thr.insertAt, 0, milestonesHipExtra.thr.item);
+
+} else {
+
+m.thr.splice(milestonesKneeExtra.thr.insertAt, 0, milestonesKneeExtra.thr.item);
+
+}
+
+return m;
+
+}
+
+function renderMilestones(){
+
+const m = buildMilestones();
+
+const map = {opt:'opt-milestones', res:'res-milestones', thr:'thr-milestones'};
+
+const colorMap = {opt:'var(--optimize)', res:'var(--restore)', thr:'var(--thrive)'};
+
+Object.keys(map).forEach(key=>{
+
+document.getElementById(map[key]).innerHTML = m[key].map((ms,i)=>`
+
+<div class="milestone">
+
+<div class="stem"></div>
+
+<div class="m-dot ${ms.checked?'checked':''}" style="${ms.checked?'':'border-color:'+colorMap[key]}" onclick="toggleMilestone('${key}',${i})"></div>
+
+<div class="m-body"><div class="day">${ms.day}</div><div class="txt">${ms.txt}</div></div>
+
+</div>
+
+`).join('');
+
+});
+
+}
+
+let liveMilestones = null;
+
+function toggleMilestone(key, i){
+
+if(!liveMilestones) liveMilestones = buildMilestones();
+
+liveMilestones[key][i].checked = !liveMilestones[key][i].checked;
+
+const map = {opt:'opt-milestones', res:'res-milestones', thr:'thr-milestones'};
+
+const colorMap = {opt:'var(--optimize)', res:'var(--restore)', thr:'var(--thrive)'};
+
+document.getElementById(map[key]).innerHTML = liveMilestones[key].map((ms,idx)=>`
+
+<div class="milestone">
+
+<div class="stem"></div>
+
+<div class="m-dot ${ms.checked?'checked':''}" style="${ms.checked?'':'border-color:'+colorMap[key]}" onclick="toggleMilestone('${key}',${idx})"></div>
+
+<div class="m-body"><div class="day">${ms.day}</div><div class="txt">${ms.txt}</div></div>
+
+</div>
+
+`).join('');
+
+}
+
+// -------- LEARN ARTICLES --------
+
+const articlesOptimization = [
+
+{pillar:'Perioperative Optimization', color:'thrive', icon:'leaf', title:'What ENROUTE nutrition actually does', body:"ENROUTE is a medical-grade surgical nutrition program, not a generic protein shake. It supplies 26 grams of leucine-rich protein isolate per serving along with creatine, calcium, and vitamin D, taken twice daily for two weeks before and two weeks after surgery. The rationale is straightforward: surgery is a metabolic stressor, and most patients cannot realistically eat their way to the protein target their tissue needs for repair. It is not a meal replacement, and it is not a substitute for a well-balanced diet, it is there to close the gap food alone usually cannot."},
+
+{pillar:'Perioperative Optimization', color:'thrive', icon:'device', title:'What ROMTech Portable Connect does for your recovery', body:"For select patients, I prescribe the ROMTech Portable Connect, a stationary bike delivered to your home that enables gentle, therapeutic movement within a comfortable range of motion. A ROMTech field clinician sets it up and shows you how to use it, and treatment plans typically run 3 weeks with 3 to 5 short home sessions a day. The device automatically measures your range of motion and shares that data with me, so I know how you're progressing between visits without you having to remember to report it. Most insurance plans approve it. If yours doesn't, it's a bonus, not a requirement, walking remains the foundation of your recovery either way."},
+
+{pillar:'Perioperative Optimization', color:'thrive', icon:'box', title:'What\u2019s in your QR Recovery Box', body:"About 24 to 48 hours after surgery, a Quality Recovery box arrives at your home. It includes a cryotherapy and compression device for swelling and pain control, a TENS unit, EdemaWear compression garments, collagen wound dressings, and printed recovery support resources. Everything in the box is chosen to make the first two weeks, the hardest stretch, more manageable without you having to source any of it yourself."},
+
+{pillar:'Perioperative Optimization', color:'thrive', icon:'molecule', title:'Peptide therapy: what it is, and where I stand', evidence:'Elective · by referral to RX Wellness', body:"Some patients ask about peptide therapy, specifically a combination often called the Wolverine Stack, as part of perioperative optimization. It pairs two research compounds, BPC-157 and TB-500, studied for their role in tissue repair and inflammation control. I want to be direct about where the evidence stands: most of what we know comes from preclinical and animal research, human data is still limited, and neither compound is FDA-approved for this use. Because of that, I don't administer or manage it myself. Interested patients are referred to RX Wellness Recovery Program, an affiliated physician-supervised clinic built specifically around nutritional optimization and peptide-based recovery protocols, before and after surgery. You'll receive a text and email about scheduling that consultation about 4 weeks before your date if you'd like to explore it. It is not a substitute for anything in your mandatory recovery protocol, and it's entirely your choice whether to pursue it."},
+
+];
+
+const articlesShared = [
+
+{pillar:'Understanding Your Surgery', color:'optimize', icon:'robot', title:'What is robotic-assisted joint replacement?', body:"A CT scan builds a 3D model of your joint before surgery. The robotic arm then helps guide precise bone preparation, implant placement, leg alignment, and soft tissue balance, while I remain in full control throughout the case. Neither traditional nor robotic surgery cuts the muscles or tendons. The difference is precision in the cuts and the plan behind them."},
+
+{pillar:'Recovery Pearls', color:'thrive', icon:'swelling', title:'Why swelling and bruising are normal', body:"It is normal to have significant swelling in the operative leg, sometimes down to the ankle and toes, and bruising that travels and darkens before it fades. Both can look worse for about a week before they improve. Elevate the leg above heart level for 30 to 60 minutes, 4 to 5 times a day, and ice for 20 minutes on and 20 minutes off. The more active you are, the more you need to elevate."},
+
+{pillar:'Recovery Pearls', color:'thrive', icon:'moon', title:'Sleep disruption after surgery is common', body:"Up to 85 percent of patients notice some disturbance in their sleep in the weeks after joint replacement, trouble falling asleep, staying asleep, or waking early. Avoid caffeine after 9pm, skip the cat nap, and keep a regular bedtime. Elevate your leg during the day to reduce swelling that builds up at night, and a pillow between the knees helps if you sleep on your side."},
+
+{pillar:'Life After Surgery', color:'ink', icon:'car', title:'When can I drive again?', body:"You need to be off prescription pain medicine, comfortable, and physically able to slam on the brakes if needed. Average time before driving is 2 to 4 weeks, though this varies by procedure and by patient. You do not need our approval, just good judgment."},
+
+{pillar:'Life After Surgery', color:'ink', icon:'growth', title:'When can I return to work?', body:"Most patients are out of work for 6 to 8 weeks. If your job is physically demanding, it may be closer to 3 months. We expect all patients to be back to work within three months of surgery, and can provide documentation for short-term disability along the way."},
+
+{pillar:'Life After Surgery', color:'ink', icon:'plane', title:'Flying and travel after surgery', body:"Short flights are generally fine at 4 to 6 weeks, with longer trips at 3 months. Walk the cabin periodically to reduce clot risk, and take an 81mg aspirin the morning and night of travel if you are not already on a blood thinner. You may set off metal detectors; simply tell the security agent you have a joint replacement."},
+
+{pillar:'Life After Surgery', color:'ink', icon:'shield', title:'Lifetime infection precautions', body:"An untreated infection anywhere else in the body can spread to your joint replacement, for life. Before dental cleanings, extractions, or other invasive procedures, you will need antibiotics one hour beforehand, typically Amoxicillin 2 grams, even years down the road. Wait 3 to 6 months after surgery before any elective dental work."},
+
+];
+
+const articlesHip = [
+
+{pillar:'Understanding Your Surgery', color:'optimize', icon:'hip-anatomy', title:'What is a total hip replacement?', body:"When the hip joint wears to the point it can no longer do its job, an artificial hip takes its place. The acetabulum is replaced with an artificial liner, and the femur with an artificial stem. The most apparent benefit is dramatic pain relief. Almost all patients have complete, or near complete, relief, and as pain lessens, function and range of motion improve."},
+
+{pillar:'Surgical Philosophy', color:'restore', icon:'hip-approach', title:'The direct anterior approach, and your hip precautions', body:"I use a direct anterior approach to place your new hip, working between muscles rather than through them. Precautions last 3 months: be careful not to extend the leg fully back, and avoid extreme outward rotation of the foot. No lunges, no extreme yoga poses, and no soccer-style kicking motion during that window."},
+
+{pillar:'Understanding Your Surgery', color:'optimize', icon:'growth', title:'How long will my hip replacement last?', body:"There is a common belief that replacements only last 10 years. That is not accurate. Most components implanted 20 years ago are still in place and working well. The estimated failure rate is about 0.5 percent per year, meaning roughly a 90 percent chance your implant is still working two decades from now."},
+
+];
+
+const articlesKnee = [
+
+{pillar:'Understanding Your Surgery', color:'optimize', icon:'knee-anatomy', title:'What is a total knee replacement?', body:"When cartilage wears away, an artificial knee takes its place. Only the surface of the joint is removed, the arthritic ends of the bones are shaved and resurfaced with metal and plastic. The goal is pain relief, and often improved motion and alignment. It is one of the safest and most effective procedures in medicine."},
+
+{pillar:'Surgical Philosophy', color:'restore', icon:'knee-approach', title:'What is muscle-sparing knee replacement?', body:"Traditional exposures cut through the quadriceps tendon and stitch it back together. The quadriceps is the workhorse muscle for walking and stairs after knee replacement. I use a true muscle-sparing technique that lifts and slides the muscle rather than cutting it, which we have found leads to less pain and a quicker recovery."},
+
+{pillar:'Life After Surgery', color:'ink', icon:'kneel', title:'Can I kneel after knee replacement?', body:"Many patients assume kneeling is off limits. There is currently no scientific evidence that kneeling damages the implant, so you are not restricted from it after surgery. Some patients simply find it uncomfortable at first; a padded surface under the knee can help."},
+
+{pillar:'Understanding Your Surgery', color:'optimize', icon:'growth', title:'How long will my knee replacement last?', body:"The belief that replacements only last 10 years is a myth. Most components implanted 20 years ago are still functioning well today. The estimated failure rate is about 0.5 percent per year, so most patients can expect their implant to still be working two decades out."},
+
+];
+
+const tint = {optimize:'var(--optimize-tint)', restore:'var(--restore-tint)', thrive:'var(--thrive-tint)', ink:'#E7E8E3'};
+
+const solid = {optimize:'var(--optimize)', restore:'var(--restore)', thrive:'var(--thrive)', ink:'var(--ink-soft)'};
+
+const solidHex = {optimize:'#3E5C76', restore:'#A85D3B', thrive:'#5C7A5C', ink:'#5C6B7D'};
+
+function renderArticles(){
+
+const list = [...(procedure==='hip'?articlesHip:articlesKnee), ...articlesShared, ...articlesOptimization];
+
+document.getElementById('article-list').innerHTML = `
+
+<div class="card article-card" style="display:flex; gap:14px; align-items:center; background:var(--ink);" onclick="openSurgeonBio()">
+
+<img src="https://teamsiddiqiortho.com/wp-content/uploads/2026/04/about_dr_ahmed_siddiqi.png" style="width:56px; height:56px; border-radius:50%; object-fit:cover; flex-shrink:0; border:2px solid #9FB0A6;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+
+<div style="display:none; width:56px; height:56px; border-radius:50%; flex-shrink:0; border:2px solid #9FB0A6; background:#20304A; align-items:center; justify-content:center;">
+
+<span style="font-family:'Fraunces',serif; font-size:22px; color:#F4F3EE;">AS</span>
+
+</div>
+
+<div>
+
+<span class="pillar-tag" style="background:rgba(159,176,166,0.2); color:#9FB0A6;">Get to know</span>
+
+<div class="headline" style="color:#F4F3EE;">Meet Dr. Siddiqi</div>
+
+<div class="meta" style="color:#9AA6B5;">Why I do this work</div>
+
+</div>
+
+</div>
+
+` + list.map((a,i)=>`
+
+<div class="card article-card" style="padding:16px;" onclick="openArticle(${i})">
+
+<div class="art-hero" style="background:${tint[a.color]};">${artIcon(a.icon, solidHex[a.color])}</div>
+
+<span class="pillar-tag" style="background:${tint[a.color]}; color:${solid[a.color]};">${a.pillar}</span>
+
+<div class="headline">${a.title}</div>
+
+<div class="meta">Dr. Ahmed Siddiqi</div>
+
+</div>
+
+`).join('');
+
+window.currentArticleList = list;
+
+}
+
+function openArticle(i){
+
+const a = window.currentArticleList[i];
+
+document.getElementById('ovTag').textContent = a.pillar;
+
+document.getElementById('ovTag').style.background = tint[a.color];
+
+document.getElementById('ovTag').style.color = solid[a.color];
+
+document.getElementById('ovTitle').textContent = a.title;
+
+document.getElementById('ovBody').textContent = a.body;
+
+const artBox = document.getElementById('ovArt');
+
+artBox.style.background = tint[a.color];
+
+artBox.innerHTML = artIcon(a.icon, solidHex[a.color]);
+
+artBox.style.display = 'flex';
+
+const evEl = document.getElementById('ovEvidence');
+
+if(a.evidence){ evEl.style.display='inline-flex'; evEl.textContent = a.evidence; }
+
+else { evEl.style.display='none'; }
+
+document.getElementById('overlay').classList.add('open');
+
+document.querySelector('.overlay-body').scrollTop = 0;
+
+}
+
+function openSurgeonBio(){
+
+document.getElementById('ovTag').textContent = 'Get to know';
+
+document.getElementById('ovTag').style.background = 'var(--optimize-tint)';
+
+document.getElementById('ovTag').style.color = 'var(--optimize)';
+
+document.getElementById('ovTitle').textContent = 'Meet Dr. Siddiqi';
+
+document.getElementById('ovBody').innerHTML = `
+
+<img src="https://teamsiddiqiortho.com/wp-content/uploads/2026/04/about_dr_ahmed_siddiqi.png" style="width:100%; border-radius:16px; margin-bottom:16px; display:block;">
+
+<p style="margin:0 0 14px;">I am a fellowship-trained orthopedic surgeon. My specialty is total hip and knee replacement, primary procedures, revision cases, and the pre-operative optimization work most surgical workups skip. My additional focus includes robotic-assisted surgery on the Stryker Mako platform, and multimodal, opioid-sparing pain protocols. I joined the Texas Center for Joint Replacement, the practice Dr. Roger Emerson founded, in 2026.</p>
+
+<p style="margin:0 0 14px;">Before that, I spent several years helping build one of the highest-volume joint replacement practices in New Jersey. I operate on the assumption that every patient in my practice is the only patient I have, not as a philosophy, but as a behavioral reality. I remember every name. I return every call.</p>
+
+<p style="margin:0;">I watched a physician talk down to my mother when I was a child. I have thought about that interaction in every pre-op conversation I have had since. The surgery is the middle of the story, not the whole of it, and what happens in the 90 days before and after matters as much as anything I do in the OR.</p>
+
+`;
+
+document.getElementById('ovArt').style.display = 'none';
+
+document.getElementById('ovEvidence').style.display = 'none';
+
+document.getElementById('overlay').classList.add('open');
+
+document.querySelector('.overlay-body').scrollTop = 0;
+
+}
+
+// -------- NOTIFICATIONS (simulated preview) --------
+
+const notifSamples = {
+
+'-30':{h:'Time for your supplements', b:'Iron, vitamin C, and magnesium/zinc/vitamin D are due today.'},
+
+'-14':{h:'ENROUTE starts today', b:'Two servings daily for the next two weeks. Between meals works best.'},
+
+'-7':{h:'Blood thinner reminder', b:'Confirm your stop date with your clearing physician today.'},
+
+'-2':{h:'Clear liquids tonight', b:'Three 20oz cups of clear fluid today, and your Chlorhexidine wash.'},
+
+'0':{h:'Surgery day', b:'No jewelry, no makeup. Small sip of water with BP meds only.'},
+
+'2':{h:'Your QR Recovery Box has shipped', b:'Cryotherapy, TENS unit, and EdemaWear are on the way.'},
+
+'7':{h:'Taylor will call today', b:'Your one week check-in call from Taylor Wade, RN.'},
+
+'14':{h:'Appointment today', b:'Post-op visit with Taylor Wade, RN. Dressing comes off.'},
+
+'28':{h:'Time to start weaning', b:'If comfortable, begin transitioning off narcotics to Tylenol.'},
+
+'42':{h:'Recovery evaluation today', b:'Your 6 week visit with Cindy Ayers-Winnubst, PT.'},
+
+'90':{h:'Milestone reached', b:'Most patients are cleared for full activity by now. How are you feeling?'},
+
+};
+
+function previewNotification(){
+
+const d = dayPoints[currentDayIndex];
+
+const n = notifSamples[String(d.day)] || {h:'Siddiqi 360', b:'You have a reminder for today.'};
+
+document.getElementById('notifHead').textContent = n.h;
+
+document.getElementById('notifBody').textContent = n.b;
+
+const banner = document.getElementById('notifBanner');
+
+banner.classList.add('show');
+
+setTimeout(()=>banner.classList.remove('show'), 3200);
+
+}
+
+// -------- MOVE / EXERCISES --------
+
+function exIcon(type){
+
+const icons = {
+
+pump: `<svg viewBox="0 0 48 48" fill="none" stroke="#16233A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 30 L14 20 Q14 14 22 14 L30 20 L30 30 Z"/><path d="M24 6 L24 12 M24 6 L21 9 M24 6 L27 9"/><path d="M24 42 L24 36 M24 42 L21 39 M24 42 L27 39"/></svg>`,
+
+squeeze: `<svg viewBox="0 0 48 48" fill="none" stroke="#16233A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="24" cy="24" rx="10" ry="14"/><path d="M8 24 L14 24 M11 21 L14 24 L11 27"/><path d="M40 24 L34 24 M37 21 L34 24 L37 27"/></svg>`,
+
+slide: `<svg viewBox="0 0 48 48" fill="none" stroke="#16233A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 36 L22 36 L34 18"/><circle cx="34" cy="14" r="3.5"/><path d="M26 24 L32 20 M26 24 L28 30"/></svg>`,
+
+raise: `<svg viewBox="0 0 48 48" fill="none" stroke="#16233A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 38 L24 38 L38 24"/><circle cx="12" cy="34" r="3.5"/><path d="M34 16 L38 24 M32 20 L38 24"/></svg>`,
+
+march: `<svg viewBox="0 0 48 48" fill="none" stroke="#16233A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 42 L18 26 L26 14"/><circle cx="26" cy="10" r="3.5"/><path d="M30 42 L30 30"/><path d="M22 16 Q26 8 32 12" stroke-dasharray="2 3"/></svg>`,
+
+walk: `<svg viewBox="0 0 48 48" fill="none" stroke="#16233A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="34" rx="4" ry="6" transform="rotate(-20 12 34)"/><ellipse cx="26" cy="24" rx="4" ry="6" transform="rotate(-15 26 24)"/><ellipse cx="40" cy="14" rx="4" ry="6" transform="rotate(-10 40 14)"/><path d="M16 30 L22 26 M30 20 L36 16" stroke-dasharray="1 3"/></svg>`,
+
+bike: `<svg viewBox="0 0 48 48" fill="none" stroke="#16233A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="32" r="8"/><circle cx="34" cy="32" r="8"/><path d="M14 32 L24 16 L34 32 M24 16 L20 32 M24 16 L30 10"/></svg>`,
+
+balance: `<svg viewBox="0 0 48 48" fill="none" stroke="#16233A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="10" r="4"/><path d="M24 14 L24 30 L18 42 M24 26 L14 24"/><path d="M10 42 L38 42"/></svg>`,
+
+stepup: `<svg viewBox="0 0 48 48" fill="none" stroke="#16233A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 40 L20 40 L20 28 L40 28"/><path d="M30 34 L34 28 L38 34" /></svg>`,
+
+};
+
+return icons[type] || icons.walk;
+
+}
+
+const exOptimize = [
+
+{id:'quad-pre', name:'Quad sets', purpose:'Wakes up the muscle that protects your new joint', dose:'10 reps × 3 sets/day', hold:5, icon:'squeeze', steps:['Sit or lie with your leg straight','Tighten the top of your thigh, pressing the back of your knee down','Hold, then release']},
+
+{id:'glute-pre', name:'Glute sets', purpose:'Builds the hip strength you\u2019ll lean on early in recovery', dose:'10 reps × 3 sets/day', hold:5, icon:'squeeze', steps:['Lie on your back','Squeeze your buttocks together','Hold, then release']},
+
+{id:'ankle-pre', name:'Ankle pumps', purpose:'The single best clot-prevention exercise there is', dose:'20 reps × 4 times/day', icon:'pump', steps:['Point your foot up toward your knee','Then point it down, away from you','Repeat at a steady pace']},
+
+{id:'march-pre', name:'Standing marches', purpose:'Prehab for the walking you\u2019ll do on Day 0', dose:'10 reps each leg × 2 sets/day', icon:'march', steps:['Hold a counter or sturdy chair','Lift one knee toward your chest','Lower with control, alternate legs']},
+
+{id:'walk-pre', name:'Walking program', purpose:'The best predictor of a smooth recovery, bar none', dose:'10 to 15 minutes daily', icon:'walk', steps:['Walk at a comfortable pace, outdoors or in hallways','Build duration gradually week to week']},
+
+];
+
+const exRestoreShared = [
+
+{id:'ankle-post', name:'Ankle pumps', purpose:'Your most important exercise right now, prevents blood clots', dose:'20 reps, every hour you\u2019re awake', icon:'pump', steps:['Point foot up, then down','Keep the motion slow and controlled']},
+
+{id:'quad-post', name:'Quad sets', purpose:'Rebuilds control around your new joint', dose:'10 reps × 3 to 4 sets/day', hold:5, icon:'squeeze', steps:['Tighten the top of your thigh','Press the back of your knee down into the bed or chair','Hold, then release']},
+
+{id:'walk-post', name:'Walking with your walker', purpose:'This is the exercise. Everything else is secondary', dose:'Short walks, several times a day', icon:'walk', steps:['Use your walker as instructed','Stop and rest at any discomfort, don\u2019t push through pain','Little and often beats one long walk']},
+
+];
+
+const exRestoreHip = [
+
+{id:'hip-abd', name:'Standing hip abduction', purpose:'Rebuilds the muscles that stabilize your new hip', dose:'10 reps × 2 sets/day', icon:'march', steps:['Hold a counter for balance','Lift your operative leg out to the side, toes facing forward','Lower with control, avoid rotating your foot outward']},
+
+];
+
+const exRestoreKnee = [
+
+{id:'heel-slide', name:'Heel slides', purpose:'Restores bend in your new knee', dose:'10 reps × 3 sets/day', icon:'slide', steps:['Lying down, slowly slide your heel toward your buttock, bending the knee','Slide back out straight','Move slowly, stop at your comfortable limit']},
+
+{id:'knee-ext', name:'Seated knee extension', purpose:'Restores full straightening, just as important as bending', dose:'10 reps × 3 sets/day', hold:5, icon:'raise', steps:['Sit with your knee bent at the edge of a chair','Straighten your leg out fully','Hold, then lower with control']},
+
+];
+
+const exThrive = [
+
+{id:'bike', name:'Stationary bike', purpose:'Low-impact way to rebuild range of motion and endurance', dose:'10 to 15 minutes, most days', icon:'bike', steps:['Start with the seat slightly higher than usual','Pedal at a light resistance','Increase time before increasing resistance']},
+
+{id:'balance', name:'Single leg balance', purpose:'Rebuilds the stability most patients don\u2019t think to train', dose:'30 seconds × 3, each side', icon:'balance', steps:['Hold a counter for safety at first','Stand on your operative leg only','Progress to no hands once steady']},
+
+{id:'stepup', name:'Step-ups', purpose:'Bridges the gap between walking and stairs at home', dose:'10 reps each leg', icon:'stepup', steps:['Use a low step or stair','Step up leading with your operative leg','Step down with control, don\u2019t let the knee collapse inward']},
+
+];
+
+let currentMovePhase = 'opt';
+
+function getExercises(phase){
+
+if(phase==='opt') return exOptimize;
+
+if(phase==='res') return [...exRestoreShared, ...(procedure==='hip'?exRestoreHip:exRestoreKnee)];
+
+return exThrive;
+
+}
+
+function renderMovePhaseTabs(){
+
+const tabs = [{k:'opt', l:'Optimize', c:'active-opt'}, {k:'res', l:'Restore', c:'active-res'}, {k:'thr', l:'Thrive', c:'active-thr'}];
+
+document.getElementById('movePhaseTabs').innerHTML = tabs.map(t=>`
+
+<div class="move-phase-tab ${currentMovePhase===t.k?t.c:''}" onclick="setMovePhase('${t.k}')">${t.l}</div>
+
+`).join('');
+
+}
+
+function setMovePhase(p){ currentMovePhase = p; renderMovePhaseTabs(); renderExercises(); }
+
+function renderExercises(){
+
+const list = getExercises(currentMovePhase);
+
+document.getElementById('exerciseList').innerHTML = list.map(ex=>`
+
+<div class="card ex-card">
+
+<div class="ex-art">${exIcon(ex.icon)}</div>
+
+<div class="ex-body">
+
+<div style="display:flex; align-items:flex-start;">
+
+<div>
+
+<div class="ex-name">${ex.name}</div>
+
+<div class="ex-purpose">${ex.purpose}</div>
+
+</div>
+
+<div class="ex-check" id="chk-${ex.id}" onclick="toggleExCheck('${ex.id}')"></div>
+
+</div>
+
+<div class="ex-meta-row"><span class="ex-dose">${ex.dose}</span></div>
+
+<ol class="ex-steps">${ex.steps.map(s=>`<li>${s}</li>`).join('')}</ol>
+
+${ex.hold ? `<div class="ex-timer-row">
+
+<div class="ex-timer-btn" onclick="startHoldTimer('${ex.id}', ${ex.hold})">Start ${ex.hold}s hold</div>
+
+<div class="ex-timer-display" id="timer-${ex.id}"></div>
+
+</div>` : ''}
+
+</div>
+
+</div>
+
+`).join('');
+
+document.getElementById('moveNote').textContent = "These are general guidelines. Your surgeon and physical therapy team may adjust pace, order, or specific exercises based on your progress. If any exercise increases pain, stop and let your team know.";
+
+applyPersistedChecks();
+
+}
+
+function toggleExCheck(id){
+
+const el = document.getElementById('chk-'+id);
+
+el.classList.toggle('done');
+
+demoState.ex[id] = el.classList.contains('done');
+
+saveState();
+
+}
+
+function startHoldTimer(id, seconds){
+
+const el = document.getElementById('timer-'+id);
+
+let remaining = seconds;
+
+el.textContent = remaining + 's';
+
+const iv = setInterval(()=>{
+
+remaining--;
+
+if(remaining<=0){ clearInterval(iv); el.textContent = 'Done'; toggleExCheckOn(id); return; }
+
+el.textContent = remaining + 's';
+
+}, 1000);
+
+}
+
+function toggleExCheckOn(id){ const c = document.getElementById('chk-'+id); if(c && !c.classList.contains('done')) c.classList.add('done'); }
+
+// -------- MEDS TAB --------
+
+const medDurations = {
+
+'Baby Aspirin':{start:1, days:28}, 'Celebrex':{start:1, days:28}, 'Journavx':{start:-1, days:14},
+
+'Pepcid':{start:1, days:28}, 'Tylenol':{start:0, days:28}, 'Gabapentin':{start:0, days:28},
+
+'Iron':{start:-30, days:59}, 'Vitamin C':{start:-30, days:59}, 'Magnesium/Zinc/Vitamin D':{start:-30, days:59},
+
+'ENROUTE':{start:-14, days:29},
+
+};
+
+function isActive(name, day){
+
+const d = medDurations[name]; if(!d) return true;
+
+return day >= d.start && day <= (d.start + d.days - 1);
+
+}
+
+function previewMedReminder(bi){
+
+const b = window.currentMedBlocks[bi];
+
+if(!b) return;
+
+const names = b.items.map(i=>i.n).join(', ');
+
+const title = b.time.split(' · ')[0] + ' · Medication reminder';
+
+const body = 'Time for: ' + names;
+
+document.getElementById('notifHead').textContent = title;
+
+document.getElementById('notifBody').textContent = body;
+
+const banner = document.getElementById('notifBanner');
+
+banner.classList.add('show');
+
+setTimeout(()=>banner.classList.remove('show'), 3400);
+
+if(window.Notification && Notification.permission === 'granted'){
+
+try{ new Notification(title, {body, icon: undefined}); }catch(e){ /* some browsers restrict this outside a service worker, banner still shown above */ }
+
+}
+
+}
+
+// -------- REAL BROWSER NOTIFICATIONS --------
+
+function updateNotifCard(){
+
+const card = document.getElementById('notifPermCard');
+
+const note = document.getElementById('notifStatusNote');
+
+if(!window.Notification){
+
+card.style.display = 'none';
+
+note.style.display = 'block';
+
+note.textContent = 'This browser doesn\u2019t support notifications. Tap the bell on any time block to preview reminders instead.';
+
+return;
+
+}
+
+if(Notification.permission === 'granted'){
+
+card.style.display = 'none';
+
+note.style.display = 'block';
+
+note.textContent = 'Real reminders are on. Keep this tab or app open to receive them at each scheduled time.';
+
+} else if(Notification.permission === 'denied'){
+
+card.style.display = 'none';
+
+note.style.display = 'block';
+
+note.textContent = 'Reminders are blocked in your browser settings. Tap the bell on any time block to preview instead.';
+
+} else {
+
+card.style.display = 'block';
+
+note.style.display = 'none';
+
+}
+
+}
+
+function enableRealReminders(){
+
+if(!window.Notification) return;
+
+Notification.requestPermission().then(()=>{ updateNotifCard(); startReminderScheduler(); });
+
+}
+
+let reminderTimer = null;
+
+let firedToday = {};
+
+function startReminderScheduler(){
+
+if(reminderTimer) return;
+
+reminderTimer = setInterval(()=>{
+
+if(!window.Notification || Notification.permission !== 'granted') return;
+
+const now = new Date();
+
+const hh = now.getHours(), mm = now.getMinutes();
+
+const nowLabel = formatTime(hh, mm);
+
+(window.currentMedBlocks||[]).forEach(b=>{
+
+const blockTime = b.time.split(' · ')[0];
+
+if(blockTime === nowLabel && !firedToday[blockTime]){
+
+firedToday[blockTime] = true;
+
+const names = b.items.map(i=>i.n).join(', ');
+
+try{ new Notification(blockTime + ' · Medication reminder', {body:'Time for: ' + names}); }catch(e){}
+
+}
+
+});
+
+if(hh===0 && mm===0) firedToday = {};
+
+}, 30000);
+
+}
+
+function formatTime(hh, mm){
+
+const period = hh >= 12 ? 'PM' : 'AM';
+
+let h12 = hh % 12; if(h12===0) h12 = 12;
+
+return h12 + ':' + String(mm).padStart(2,'0') + ' ' + period;
+
+}
+
+function medStatus(name, day){
+
+const d = medDurations[name]; if(!d) return '';
+
+if(day < d.start) return 'Starts ' + (d.start<0 ? 'Day '+d.start : 'at surgery');
+
+const dayNum = day - d.start + 1;
+
+if(dayNum > d.days) return 'Course complete';
+
+return 'Day '+dayNum+' of '+d.days;
+
+}
+
+const medBlocks = [
+
+{time:'8:00 AM', items:[
+
+{n:'Iron', dose:'65mg', note:'With vitamin C for absorption'},
+
+{n:'Vitamin C', dose:'1,000mg', note:'Supports iron absorption & healing'},
+
+{n:'Magnesium/Zinc/Vitamin D', dose:'1 serving', note:'General surgical prep'},
+
+{n:'ENROUTE', dose:'1 serving (BUILD)', note:'Protein isolate + creatine'},
+
+{n:'Baby Aspirin', dose:'81mg', note:'Prevents blood clots'},
+
+{n:'Celebrex', dose:'200mg, with food', note:'Pain & inflammation'},
+
+{n:'Journavx', dose:'50mg', note:'Pain control'},
+
+{n:'Pepcid', dose:'20mg', note:'Stomach protection'},
+
+{n:'Tylenol', dose:'1,000mg', note:'Pain control'},
+
+]},
+
+{time:'2:00 PM', items:[
+
+{n:'Tylenol', dose:'1,000mg', note:'Every 6 hours'},
+
+]},
+
+{time:'8:00 PM', items:[
+
+{n:'ENROUTE', dose:'1 serving (BUILD)', note:'Protein isolate + creatine'},
+
+{n:'Baby Aspirin', dose:'81mg', note:'Prevents blood clots'},
+
+{n:'Celebrex', dose:'200mg, with food', note:'Pain & inflammation'},
+
+{n:'Journavx', dose:'50mg', note:'Pain control'},
+
+{n:'Pepcid', dose:'20mg', note:'Stomach protection'},
+
+{n:'Tylenol', dose:'1,000mg', note:'Pain control'},
+
+]},
+
+{time:'9:00 PM · Bedtime', items:[
+
+{n:'Gabapentin', dose:'300mg', note:'Nerve pain control'},
+
+]},
+
+];
+
+const optionalMedsList = [
+
+{n:'Decadron (Dexamethasone)', d:'4mg every 12 hours · 7 days', note:'If prescribed, reduces inflammation'},
+
+{n:'Medrol Dose Pack', d:'As directed · 6 days', note:'If prescribed, starts after Decadron completes'},
+
+{n:'Methocarbamol (Robaxin)', d:'750mg every 12 hours · 4 weeks', note:'If prescribed, muscle relaxation'},
+
+];
+
+function renderMedSchedule(){
+
+const day = dayPoints[currentDayIndex].day;
+
+const blocksWithActive = medBlocks.map(b => ({...b, items: b.items.filter(it => isActive(it.n, day))}));
+
+const activeBlocks = blocksWithActive.filter(b => b.items.length > 0);
+
+if(activeBlocks.length === 0){
+
+document.getElementById('medSchedule').innerHTML = `<div class="card" style="text-align:center; color:var(--ink-soft); font-size:12.5px; padding:22px 16px;">Nothing scheduled yet for Day ${dayPoints[currentDayIndex].label}. Your supplement window opens Day −30.</div>`;
+
+} else {
+
+document.getElementById('medSchedule').innerHTML = activeBlocks.map((b,bi)=>`
+
+<div class="med-time-head">
+
+<div class="med-time-dot"></div>
+
+<div class="med-time-label">${b.time}</div>
+
+<div class="remind-pill" onclick="previewMedReminder(${bi})">
+
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+
+Remind me
+
+</div>
+
+</div>
+
+<div class="card" style="padding-top:4px; padding-bottom:4px;">
+
+${b.items.map((it,ii)=>`
+
+<div class="pill-row">
+
+<div class="pill-check" id="pill-${bi}-${ii}" onclick="togglePill(this)"></div>
+
+<div><div class="pill-name">${it.n}</div><div class="pill-dose">${it.dose} · ${it.note}</div></div>
+
+<div class="pill-status">${medStatus(it.n, day)}</div>
+
+</div>
+
+`).join('')}
+
+</div>
+
+`).join('');
+
+window.currentMedBlocks = activeBlocks;
+
+}
+
+document.getElementById('optionalMeds').innerHTML = optionalMedsList.map(m=>`
+
+<div class="optional-med-row"><div><div class="n">${m.n}</div><div class="d">${m.note}</div></div><div class="d">${m.d}</div></div>
+
+`).join('');
+
+applyPersistedChecks();
+
+}
+
+function togglePill(el){
+
+el.classList.toggle('done');
+
+demoState.pills[el.id] = el.classList.contains('done');
+
+saveState();
+
+}
+
+function artIcon(type, strokeColor){
+
+const c = strokeColor || '#16233A';
+
+const scenes = {
+
+robot: `<svg viewBox="0 0 300 170">
+
+<g stroke="${c}" stroke-width="1" opacity="0.25"><path d="M40 20 L40 150 M90 20 L90 150 M140 20 L140 150" stroke-dasharray="3 5"/><path d="M20 40 L260 40 M20 90 L260 90 M20 130 L260 130" stroke-dasharray="3 5"/></g>
+
+<g fill="none" stroke="${c}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M230 30 L230 60 L190 80 L165 110"/><circle cx="230" cy="30" r="7" fill="${c}" stroke="none"/><circle cx="230" cy="60" r="5"/><circle cx="190" cy="80" r="5"/></g>
+
+<g fill="none" stroke="${c}" stroke-width="3"><circle cx="150" cy="125" r="26"/><circle cx="150" cy="125" r="12"/><path d="M150 93 L150 105 M150 145 L150 157 M118 125 L130 125 M170 125 L182 125"/></g>
+
+</svg>`,
+
+swelling: `<svg viewBox="0 0 300 170">
+
+<path d="M50 150 L110 150 L150 120 L50 120 Z" fill="${c}" opacity="0.18"/>
+
+<path d="M60 60 L110 90 L170 100 L220 95" fill="none" stroke="${c}" stroke-width="7" stroke-linecap="round"/>
+
+<path d="M150 80 C185 78 225 82 235 100 C242 112 232 122 210 120 C185 118 165 105 150 95Z" fill="none" stroke="${c}" stroke-width="2.5" stroke-dasharray="4 4" opacity="0.7"/>
+
+<g stroke="${c}" stroke-width="2" opacity="0.6"><path d="M200 55 L200 67 M194 61 L206 61 M196 57 L204 65 M204 57 L196 65"/><path d="M225 45 L225 55 M220 50 L230 50"/></g>
+
+</svg>`,
+
+moon: `<svg viewBox="0 0 300 170">
+
+<path d="M190 30 A48 48 0 1 0 190 126 A36 36 0 0 1 190 30Z" fill="${c}" opacity="0.9"/>
+
+<g fill="${c}"><circle cx="240" cy="35" r="3"/><circle cx="255" cy="55" r="2"/><circle cx="225" cy="20" r="2"/></g>
+
+<path d="M40 140 Q90 110 150 140 Q210 110 260 140" fill="none" stroke="${c}" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
+
+</svg>`,
+
+car: `<svg viewBox="0 0 300 170">
+
+<g fill="none" stroke="${c}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M40 110 L48 80 Q56 65 78 65 L170 65 Q192 65 200 80 L208 110"/><rect x="30" y="110" width="188" height="30" rx="8"/><circle cx="65" cy="142" r="14"/><circle cx="180" cy="142" r="14"/></g>
+
+<path d="M90 100 L110 88 Q118 84 118 95 L118 112" fill="none" stroke="${c}" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
+
+<g stroke="${c}" stroke-width="3" opacity="0.4" stroke-linecap="round"><path d="M228 90 L250 90 M232 105 L256 105 M228 120 L248 120"/></g>
+
+</svg>`,
+
+growth: `<svg viewBox="0 0 300 170">
+
+<circle cx="150" cy="90" r="55" fill="none" stroke="${c}" stroke-width="6" opacity="0.25"/>
+
+<path d="M150 35 A55 55 0 1 1 97 122" fill="none" stroke="${c}" stroke-width="6" stroke-linecap="round"/>
+
+<path d="M128 90 L145 108 L178 68" fill="none" stroke="${c}" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+
+<g stroke="${c}" stroke-width="2" opacity="0.5"><path d="M150 25 L150 35 M225 90 L215 90 M150 155 L150 145 M75 90 L85 90"/></g>
+
+</svg>`,
+
+plane: `<svg viewBox="0 0 300 170">
+
+<path d="M40 130 Q150 40 260 60" fill="none" stroke="${c}" stroke-width="2.5" stroke-dasharray="5 6" opacity="0.5"/>
+
+<path d="M240 55 L200 45 L165 55 L200 30 L215 25 L235 40 L260 42 L270 50 L250 52Z" fill="${c}"/>
+
+<g fill="none" stroke="${c}" stroke-width="3" opacity="0.4" stroke-linecap="round"><path d="M60 110 Q75 100 90 110 Q105 100 120 110"/><path d="M50 90 Q62 82 74 90"/></g>
+
+</svg>`,
+
+shield: `<svg viewBox="0 0 300 170">
+
+<path d="M150 20 L200 38 V85 C200 118 178 140 150 152 C122 140 100 118 100 85 V38 Z" fill="none" stroke="${c}" stroke-width="6" stroke-linejoin="round"/>
+
+<path d="M125 85 L142 102 L178 62" fill="none" stroke="${c}" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+
+<path d="M225 100 C235 95 245 100 245 112 C245 122 240 130 235 138 C232 130 230 122 225 118 C220 122 218 130 215 138 C210 130 205 122 205 112 C205 100 215 95 225 100Z" fill="${c}" opacity="0.7"/>
+
+</svg>`,
+
+'hip-anatomy': `<svg viewBox="0 0 300 170">
+
+<path d="M90 40 C130 25 175 30 195 60 C205 78 200 95 180 100" fill="none" stroke="${c}" stroke-width="6" stroke-linecap="round"/>
+
+<path d="M150 65 A28 28 0 0 1 178 100" fill="none" stroke="${c}" stroke-width="6" stroke-linecap="round"/>
+
+<circle cx="160" cy="90" r="20" fill="none" stroke="${c}" stroke-width="6"/>
+
+<path d="M160 110 L150 160" stroke="${c}" stroke-width="8" stroke-linecap="round"/>
+
+</svg>`,
+
+'hip-approach': `<svg viewBox="0 0 300 170">
+
+<circle cx="150" cy="50" r="12" fill="${c}"/>
+
+<path d="M150 62 L150 110" stroke="${c}" stroke-width="8" stroke-linecap="round"/>
+
+<path d="M150 110 L120 155" stroke="${c}" stroke-width="8" stroke-linecap="round"/>
+
+<path d="M150 90 A60 60 0 0 1 205 130" fill="none" stroke="${c}" stroke-width="3" stroke-dasharray="5 5" opacity="0.5"/>
+
+<path d="M215 115 L225 125 M225 115 L215 125" stroke="${c}" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+
+<path d="M150 90 A60 60 0 0 0 100 145" fill="none" stroke="${c}" stroke-width="3" opacity="0.85"/>
+
+</svg>`,
+
+'knee-anatomy': `<svg viewBox="0 0 300 170">
+
+<rect x="120" y="20" width="36" height="70" rx="14" fill="${c}" opacity="0.85"/>
+
+<rect x="128" y="98" width="30" height="60" rx="10" fill="${c}" opacity="0.85"/>
+
+<path d="M110 90 Q143 105 175 90" fill="none" stroke="${c}" stroke-width="7" stroke-linecap="round"/>
+
+<path d="M118 100 Q143 88 168 100" fill="none" stroke="${c}" stroke-width="5" stroke-linecap="round" opacity="0.6"/>
+
+</svg>`,
+
+'knee-approach': `<svg viewBox="0 0 300 170">
+
+<path d="M150 15 L150 155" stroke="${c}" stroke-width="1.5" stroke-dasharray="3 5" opacity="0.35"/>
+
+<path d="M70 20 L60 150" stroke="${c}" stroke-width="26" stroke-linecap="round" opacity="0.28"/>
+
+<path d="M70 30 L64 140" stroke="${c}" stroke-width="4" stroke-dasharray="7 6"/>
+
+<path d="M230 20 L220 150" stroke="${c}" stroke-width="26" stroke-linecap="round" opacity="0.28"/>
+
+<path d="M236 35 Q205 90 236 138" fill="none" stroke="${c}" stroke-width="4" stroke-linecap="round"/>
+
+</svg>`,
+
+kneel: `<svg viewBox="0 0 300 170">
+
+<ellipse cx="150" cy="145" rx="70" ry="14" fill="${c}" opacity="0.2"/>
+
+<g fill="none" stroke="${c}" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path d="M140 30 L150 80 L120 110 L120 140"/><path d="M150 80 L190 95"/></g>
+
+<circle cx="140" cy="20" r="10" fill="${c}"/>
+
+</svg>`,
+
+leaf: `<svg viewBox="0 0 300 170">
+
+<path d="M130 40 L170 40 L175 60 L175 145 Q175 155 165 155 L135 155 Q125 155 125 145 L125 60 Z" fill="none" stroke="${c}" stroke-width="6" stroke-linejoin="round"/>
+
+<path d="M120 35 L180 35 L180 50 L120 50 Z" fill="${c}" opacity="0.85"/>
+
+<path d="M130 90 L170 90" stroke="${c}" stroke-width="3" opacity="0.4"/>
+
+<g stroke="${c}" stroke-width="3" stroke-linecap="round" opacity="0.6"><path d="M205 60 L215 60 M210 55 L210 65"/><path d="M225 90 L233 90 M229 86 L229 94"/><path d="M200 110 L206 110 M203 107 L203 113"/></g>
+
+</svg>`,
+
+device: `<svg viewBox="0 0 300 170">
+
+<circle cx="90" cy="115" r="40" fill="none" stroke="${c}" stroke-width="6"/>
+
+<circle cx="200" cy="115" r="40" fill="none" stroke="${c}" stroke-width="6"/>
+
+<path d="M90 115 L145 60 L200 115 M145 60 L130 115 M145 60 L175 45" fill="none" stroke="${c}" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+
+<rect x="160" y="20" width="45" height="30" rx="4" fill="none" stroke="${c}" stroke-width="4"/>
+
+<path d="M168 35 L178 28 L188 38 L198 25" fill="none" stroke="${c}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+
+</svg>`,
+
+box: `<svg viewBox="0 0 300 170">
+
+<path d="M60 70 L150 40 L240 70 L240 140 L150 155 L60 140 Z" fill="none" stroke="${c}" stroke-width="6" stroke-linejoin="round"/>
+
+<path d="M60 70 L150 100 L240 70 M150 100 L150 155" fill="none" stroke="${c}" stroke-width="5" stroke-linejoin="round"/>
+
+<rect x="95" y="50" width="30" height="20" rx="3" fill="${c}" opacity="0.6" transform="rotate(-8 110 60)"/>
+
+<rect x="165" y="45" width="26" height="34" rx="4" fill="${c}" opacity="0.75" transform="rotate(6 178 62)"/>
+
+</svg>`,
+
+molecule: `<svg viewBox="0 0 300 170">
+
+<g fill="none" stroke="${c}" stroke-width="3" opacity="0.6"><path d="M100 45 L150 85 M200 45 L150 85 M150 85 L120 130 M150 85 L185 125 M100 45 L70 90 M200 45 L230 90"/></g>
+
+<g fill="${c}"><circle cx="100" cy="45" r="12"/><circle cx="200" cy="45" r="12"/><circle cx="150" cy="85" r="14"/><circle cx="120" cy="130" r="10"/><circle cx="185" cy="125" r="10"/><circle cx="70" cy="90" r="8"/><circle cx="230" cy="90" r="8"/></g>
+
+</svg>`,
+
+};
+
+return scenes[type] || scenes.leaf;
+
+}
+
+// -------- PERSISTENCE (demo-only; NOT a HIPAA data store) --------
+
+let demoState = { tasks:{}, ex:{}, pills:{}, pain:3 };
+
+async function loadState(){
+
+try{
+
+if(window.storage){
+
+const r = await window.storage.get('siddiqi360-demo-state');
+
+if(r && r.value) demoState = JSON.parse(r.value);
+
+} else {
+
+const raw = localStorage.getItem('siddiqi360-demo-state');
+
+if(raw) demoState = JSON.parse(raw);
+
+}
+
+}catch(e){ /* no saved state yet, defaults are fine */ }
+
+}
+
+async function saveState(){
+
+try{
+
+if(window.storage){ await window.storage.set('siddiqi360-demo-state', JSON.stringify(demoState)); }
+
+else { localStorage.setItem('siddiqi360-demo-state', JSON.stringify(demoState)); }
+
+}catch(e){ console.error('Storage save failed', e); }
+
+}
+
+let resetArmed = false;
+
+async function resetProgress(){
+
+const btn = document.getElementById('resetBtn');
+
+if(!resetArmed){
+
+resetArmed = true;
+
+btn.textContent = 'Tap again to confirm';
+
+setTimeout(()=>{ resetArmed = false; btn.textContent = 'Reset all progress'; }, 3000);
+
+return;
+
+}
+
+resetArmed = false;
+
+demoState = { tasks:{}, ex:{}, pills:{}, pain:3 };
+
+try{
+
+if(window.storage){ await window.storage.delete('siddiqi360-demo-state'); }
+
+else{ localStorage.removeItem('siddiqi360-demo-state'); }
+
+}catch(e){ /* nothing saved, that's fine */ }
+
+document.querySelectorAll('.task-check.done, .ex-check.done, .pill-check.done').forEach(el=>el.classList.remove('done'));
+
+document.querySelectorAll('.task-txt.done').forEach(el=>el.classList.remove('done'));
+
+const s = document.getElementById('painSlider');
+
+if(s){ s.value = 3; document.getElementById('painVal').textContent = 3; }
+
+btn.textContent = 'Done, starting fresh';
+
+setTimeout(()=>{ btn.textContent = 'Reset all progress'; }, 1800);
+
+}
+
+function applyPersistedChecks(){
+
+Object.keys(demoState.tasks||{}).forEach(id=>{
+
+const el = document.querySelector(`[data-task-id="${id}"]`);
+
+if(el && demoState.tasks[id]){ el.classList.add('done'); if(el.nextElementSibling) el.nextElementSibling.classList.add('done'); }
+
+});
+
+Object.keys(demoState.ex||{}).forEach(id=>{
+
+const el = document.getElementById('chk-'+id);
+
+if(el && demoState.ex[id]) el.classList.add('done');
+
+});
+
+Object.keys(demoState.pills||{}).forEach(id=>{
+
+const el = document.getElementById(id);
+
+if(el && demoState.pills[id]) el.classList.add('done');
+
+});
+
+if(demoState.pain !== undefined){
+
+const s = document.getElementById('painSlider');
+
+if(s){ s.value = demoState.pain; document.getElementById('painVal').textContent = demoState.pain; }
+
+}
+
+}
+
+// -------- WALKING / STEP COUNT PROTOCOL (placeholder pending real numbers) --------
+
+const walkTargets = [
+
+{range:'Day −30 to −1', minDay:-30, maxDay:-1, label:'Build baseline', value:'15–20 min walks, 2×/day', note:'no step count yet'},
+
+{range:'Day 0 to 6', minDay:0, maxDay:6, label:'As tolerated', value:'Short walks every 1–2 hrs', note:'no step count target'},
+
+{range:'Day 7 to 13', minDay:7, maxDay:13, label:'Week 2', value:'~1,500–2,500 steps/day', note:'placeholder'},
+
+{range:'Day 14 to 27', minDay:14, maxDay:27, label:'Weeks 3–4', value:'~3,000–4,000 steps/day', note:'placeholder'},
+
+{range:'Day 28 to 41', minDay:28, maxDay:41, label:'Weeks 5–6', value:'~4,000–6,000 steps/day', note:'placeholder'},
+
+{range:'Day 42+', minDay:42, maxDay:9999, label:'Week 7+', value:'~6,000–8,000+ steps/day', note:'placeholder, toward baseline'},
+
+];
+
+function renderWalkTargets(day){
+
+document.getElementById('walkTargetRow').innerHTML = walkTargets.map(w=>{
+
+const active = day >= w.minDay && day <= w.maxDay;
+
+return `<div class="walk-target" style="${active?'background:var(--restore-tint); border-radius:10px; padding-left:8px; padding-right:8px; margin:0 -8px;':''}">
+
+<div class="wk">${w.range}</div>
+
+<div class="wv">${w.value}<span>${w.note}</span></div>
+
+</div>`;
+
+}).join('');
+
+}
+
+function toggleSwitch(el){ el.classList.toggle('off'); }
+
+// -------- SYMPTOM TRIAGE --------
+
+const symptoms = [
+
+{id:'fever', label:'Fever above 101°F', urgent:true},
+
+{id:'redness', label:'Spreading redness', urgent:true},
+
+{id:'drainage', label:'Wound drainage', urgent:true},
+
+{id:'calf', label:'New calf pain/swelling', urgent:true},
+
+{id:'swelling', label:'Normal swelling', urgent:false},
+
+{id:'soreness', label:'Activity soreness', urgent:false},
+
+{id:'sleep', label:'Trouble sleeping', urgent:false},
+
+];
+
+let selectedSymptoms = new Set();
+
+function renderSymptoms(){
+
+document.getElementById('symptomGrid').innerHTML = symptoms.map(s=>`
+
+<div class="symptom-chip" data-id="${s.id}" onclick="toggleSymptom('${s.id}')">${s.label}</div>
+
+`).join('');
+
+}
+
+function toggleSymptom(id){
+
+if(selectedSymptoms.has(id)) selectedSymptoms.delete(id); else selectedSymptoms.add(id);
+
+document.querySelectorAll('.symptom-chip').forEach(c=>{
+
+c.classList.toggle('selected', selectedSymptoms.has(c.dataset.id));
+
+});
+
+evaluateTriage();
+
+}
+
+function evaluateTriage(){
+
+const result = document.getElementById('triageResult');
+
+const cta = document.getElementById('triageCta');
+
+if(selectedSymptoms.size===0){ result.classList.remove('show'); return; }
+
+const anyUrgent = [...selectedSymptoms].some(id => symptoms.find(s=>s.id===id).urgent);
+
+result.classList.add('show');
+
+if(anyUrgent){
+
+result.className = 'triage-result show urgent';
+
+document.getElementById('triageTitle').textContent = 'Call the office now';
+
+document.getElementById('triageBody').textContent = 'What you selected can signal a complication. Call 972-608-8868, this is also the after-hours line. Don\u2019t wait on this one.';
+
+cta.style.display='none';
+
+} else {
+
+result.className = 'triage-result show ok';
+
+document.getElementById('triageTitle').textContent = 'This sounds like normal recovery';
+
+document.getElementById('triageBody').textContent = 'Nothing you selected is a red flag. If it\u2019s not improving in a few days, mention it at your next visit, or call the office if you\u2019re ever unsure.';
+
+cta.style.display='inline-block';
+
+}
+
+}
+
+// -------- SHOP (Optimize phase only) --------
+
+const shopItems = [
+
+{name:'ENROUTE Surgical Nutrition', sub:'Protein isolate, creatine, calcium, vitamin D · 2/day for 2 weeks pre and post-op', url:'https://getenroute.com/products/enroute', label:'Order'},
+
+{name:'Pre-op supplement kit', sub:'Iron, vitamin C, magnesium/zinc/vitamin D, and more, curated by our office', url:'https://www.amazon.com/hz/wishlist/ls/1R392KQ79RYNW?ref_=wl_share', label:'View list'},
+
+{name:'Chlorhexidine (Hibiclens)', sub:'Antiseptic wash, night before and morning of surgery', url:'', label:'At pharmacy'},
+
+];
+
+function renderShop(day){
+
+const el = document.getElementById('shopSection');
+
+if(day>=0){ el.innerHTML=''; return; }
+
+el.innerHTML = `
+
+<div class="eyebrow" style="margin-bottom:8px;">Prepare</div>
+
+<div class="card shop-card">
+
+${shopItems.map(s=>`
+
+<div class="item">
+
+<div><div class="name">${s.name}</div><div class="sub">${s.sub}</div></div>
+
+${s.url ? `<a class="shop-link" href="${s.url}" target="_blank" rel="noopener">${s.label}</a>` : `<span class="shop-link" style="background:var(--optimize-tint);">${s.label}</span>`}
+
+</div>
+
+`).join('')}
+
+</div>
+
+`;
+
+}
+
+function closeArticle(){ document.getElementById('overlay').classList.remove('open'); }
+
+// -------- MEDICATIONS (Track tab) --------
+
+const meds = [
+
+{name:'Blood thinner (Baby Aspirin 81mg)', dose:'Every 12 hours, from Day 1', dur:'4 wks'},
+
+{name:'Celebrex (Celecoxib)', dose:'200mg every 12 hrs with food, from Day 1', dur:'4 wks'},
+
+{name:'Journavx (Suzetrigine)', dose:'50mg every 12 hrs, from Day −1', dur:'2 wks'},
+
+{name:'Pepcid (Famotidine)', dose:'20mg every 12 hrs, from Day 1', dur:'4 wks'},
+
+{name:'Gabapentin', dose:'300mg at bedtime, from Day 0', dur:'4 wks'},
+
+{name:'Tylenol', dose:'1000mg every 6 hrs, from Day 0', dur:'4 wks'},
+
+{name:'Tranexamic Acid', dose:'650mg twice daily, from Day 1', dur:'14 days'},
+
+];
+
+function renderMeds(){
+
+document.getElementById('medList').innerHTML = meds.map(m=>`
+
+<div class="med-row">
+
+<div><div class="name">${m.name}</div><div class="dose">${m.dose}</div></div>
+
+<div class="dur">${m.dur}</div>
+
+</div>
+
+`).join('');
+
+}
+
+// -------- PROCEDURE TOGGLE --------
+
+function setProcedure(p){
+
+procedure = p;
+
+document.querySelectorAll('.proc-btn').forEach(b=>b.classList.toggle('active', b.dataset.proc===p));
+
+document.getElementById('journeySub').textContent = p==='hip'
+
+? 'Every stage of your Direct Anterior hip replacement, from preparation to full recovery.'
+
+: 'Every stage of your Muscle-Sparing knee replacement, from preparation to full recovery.';
+
+liveMilestones = null;
+
+renderMilestones();
+
+renderArticles();
+
+renderExercises();
+
+renderTasks(dayPoints[currentDayIndex].day);
+
+}
+
+// -------- PAIN BARS --------
+
+const painData = [4,5,3,4,2,3,3];
+
+document.getElementById('painBars').innerHTML = painData.map((v,i)=>{
+
+const days=['M','T','W','T','F','S','S'];
+
+return `<div class="bar" style="height:${v*10}%;"><span>${days[i]}</span></div>`;
+
+}).join('');
+
+function attemptSignin(){
+
+const val = document.getElementById('accessCode').value.trim();
+
+const err = document.getElementById('signinError');
+
+if(val.length < 4){
+
+err.textContent = 'Enter the access code from your packet or text message.';
+
+return;
+
+}
+
+const dateVal = document.getElementById('surgeryDateInput').value;
+
+if(dateVal){
+
+demoState.surgeryDate = dateVal;
+
+saveState();
+
+}
+
+err.textContent = '';
+
+goTo('home');
+
+}
+
+function nearestDayIndex(){
+
+if(!demoState.surgeryDate) return 0; // no date on file yet: start at Day -30, the beginning of the journey
+
+const surgery = new Date(demoState.surgeryDate + 'T00:00:00');
+
+const today = new Date();
+
+today.setHours(0,0,0,0);
+
+const realDay = Math.round((today - surgery) / 86400000);
+
+let closest = 0, closestDiff = Infinity;
+
+dayPoints.forEach((d,i)=>{
+
+const diff = Math.abs(d.day - realDay);
+
+if(diff < closestDiff){ closestDiff = diff; closest = i; }
+
+});
+
+return closest;
+
+}
+
+function goTo(id){
+
+document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+
+document.getElementById(id).classList.add('active');
+
+if(id!=='splash'){
+
+document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+
+const tab = document.querySelector(`.tab[data-tab="${id}"]`);
+
+if(tab) tab.classList.add('active');
+
+}
+
+if(id==='meds') updateNotifCard();
+
+}
+
+// init
+
+async function init(){
+
+await loadState();
+
+document.querySelector('.proc-btn[data-proc="hip"]').classList.add('active');
+
+renderDayChips();
+
+setDay(nearestDayIndex());
+
+renderMilestones();
+
+renderArticles();
+
+renderMeds();
+
+renderMedSchedule();
+
+renderSymptoms();
+
+renderMovePhaseTabs();
+
+renderExercises();
+
+applyPersistedChecks();
+
+if(window.Notification && Notification.permission === 'granted') startReminderScheduler();
+
+}
+
+init();
+
+</script>
+
+</body>
+
+</html>
