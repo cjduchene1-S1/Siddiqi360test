@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Siddiqi 360 — Staff Admin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+--ink:#0A1B3D; --ink-soft:#57647C; --paper:#EFF1EC; --card:#FFFFFF;
+--line:rgba(10,27,61,0.10); --gold:#DFA82C; --restore:#B0631E; --restore-tint:#F5E6D8;
+--thrive:#3F6B45; --thrive-tint:#E3EBE4;
+}
+*{box-sizing:border-box;}
+body{ margin:0; background:var(--paper); font-family:'Inter',sans-serif; color:var(--ink); }
+.wrap{ max-width:760px; margin:0 auto; padding:32px 20px 80px; }
+h1{ font-family:'Outfit',sans-serif; font-size:26px; font-weight:600; margin:0 0 4px; }
+.sub{ color:var(--ink-soft); font-size:13.5px; margin-bottom:28px; }
+.card{ background:var(--card); border:1px solid var(--line); border-radius:16px; padding:20px; margin-bottom:20px; }
+label{ display:block; font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px; font-family:'IBM Plex Mono',monospace; }
+input{ width:100%; padding:12px 14px; border-radius:10px; border:1px solid var(--line); font-size:14px; font-family:'IBM Plex Mono',monospace; color:var(--ink); background:var(--paper); }
+button{ font-family:'Inter',sans-serif; font-weight:600; font-size:13.5px; border:none; border-radius:24px; padding:12px 22px; cursor:pointer; }
+.btn-primary{ background:var(--ink); color:#F4F3EE; }
+.btn-primary:hover{ opacity:0.9; }
+.btn-danger{ background:var(--restore-tint); color:var(--restore); }
+#loginScreen{ max-width:380px; margin:80px auto 0; text-align:center; }
+#loginScreen .card{ text-align:left; }
+#err{ color:var(--restore); font-size:12.5px; margin-top:8px; min-height:16px; }
+#appScreen{ display:none; }
+table{ width:100%; border-collapse:collapse; font-size:13px; }
+th{ text-align:left; padding:10px 8px; border-bottom:2px solid var(--line); font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:1px; text-transform:uppercase; color:var(--ink-soft); }
+td{ padding:10px 8px; border-bottom:1px solid var(--line); vertical-align:top; }
+.code-cell{ font-family:'IBM Plex Mono',monospace; font-weight:600; letter-spacing:0.5px; }
+.status-active{ display:inline-block; padding:3px 9px; border-radius:12px; background:var(--thrive-tint); color:var(--thrive); font-size:11px; font-weight:600; }
+.status-revoked{ display:inline-block; padding:3px 9px; border-radius:12px; background:var(--restore-tint); color:var(--restore); font-size:11px; font-weight:600; }
+.row-gen{ display:flex; gap:10px; align-items:flex-end; flex-wrap:wrap; }
+.row-gen > div{ flex:1; min-width:180px; }
+.newcode-banner{ display:none; margin-top:14px; padding:14px; border-radius:12px; background:var(--thrive-tint); color:var(--ink); font-family:'IBM Plex Mono',monospace; font-size:16px; font-weight:600; letter-spacing:1px; text-align:center; }
+.empty{ color:var(--ink-soft); font-size:13px; padding:20px; text-align:center; }
+</style>
+</head>
+<body>
+
+<div id="loginScreen">
+<div class="wrap" style="padding-top:0;">
+<h1>Siddiqi 360</h1>
+<div class="sub">Staff admin — access code management</div>
+<div class="card">
+<label for="adminKeyInput">Staff password</label>
+<input id="adminKeyInput" type="password" placeholder="Enter staff password" onkeydown="if(event.key==='Enter') login()">
+<div id="err"></div>
+<button class="btn-primary" style="width:100%; margin-top:12px;" onclick="login()">Sign in</button>
+</div>
+</div>
+</div>
+
+<div id="appScreen">
+<div class="wrap">
+<h1>Access Codes</h1>
+<div class="sub">Generate a code at checkout, hand it to the patient with their recovery paperwork. This page never stores patient names — keep that mapping in the chart, as usual.</div>
+
+<div class="card">
+<div class="row-gen">
+<div>
+<label for="noteInput">Internal note (optional, no patient names)</label>
+<input id="noteInput" type="text" placeholder="e.g. Hip cohort, Sept 2026">
+</div>
+<button class="btn-primary" onclick="generateCode()">Generate new code</button>
+</div>
+<div id="newCodeBanner" class="newcode-banner"></div>
+</div>
+
+<div class="card" style="padding:0; overflow:hidden;">
+<div id="tableWrap" style="overflow-x:auto;">
+<table>
+<thead>
+<tr><th>Code</th><th>Status</th><th>Note</th><th>Created</th><th>Uses</th><th></th></tr>
+</thead>
+<tbody id="codeRows"></tbody>
+</table>
+<div id="emptyState" class="empty" style="display:none;">No codes generated yet.</div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+let adminKey = sessionStorage.getItem('siddiqi360AdminKey') || '';
+
+function login(){
+adminKey = document.getElementById('adminKeyInput').value.trim();
+if(!adminKey){ document.getElementById('err').textContent = 'Enter the staff password.'; return; }
+loadCodes(true);
+}
+
+async function apiCall(path, body){
+const res = await fetch('/.netlify/functions/' + path, {
+method:'POST',
+headers:{ 'Content-Type':'application/json', 'x-admin-key': adminKey },
+body: JSON.stringify(body || {}),
+});
+if(res.status === 401){ throw new Error('unauthorized'); }
+if(!res.ok){ throw new Error('server'); }
+return res.json();
+}
+
+async function loadCodes(fromLogin){
+try{
+const data = await apiCall('list-codes');
+sessionStorage.setItem('siddiqi360AdminKey', adminKey);
+document.getElementById('loginScreen').style.display = 'none';
+document.getElementById('appScreen').style.display = 'block';
+renderRows(data.codes || []);
+}catch(e){
+if(fromLogin){ document.getElementById('err').textContent = 'Incorrect password.'; }
+else { sessionStorage.removeItem('siddiqi360AdminKey'); location.reload(); }
+}
+}
+
+function renderRows(codes){
+const tbody = document.getElementById('codeRows');
+const empty = document.getElementById('emptyState');
+if(codes.length === 0){ tbody.innerHTML = ''; empty.style.display = 'block'; return; }
+empty.style.display = 'none';
+tbody.innerHTML = codes.map(c => `
+<tr>
+<td class="code-cell">${c.code}</td>
+<td><span class="${c.status==='active' ? 'status-active':'status-revoked'}">${c.status}</span></td>
+<td>${c.note || ''}</td>
+<td>${new Date(c.created_at).toLocaleDateString()}</td>
+<td>${c.redemption_count || 0}</td>
+<td>${c.status==='active' ? `<button class="btn-danger" onclick="revoke('${c.code}')">Revoke</button>` : ''}</td>
+</tr>
+`).join('');
+}
+
+async function generateCode(){
+const note = document.getElementById('noteInput').value.trim();
+try{
+const data = await apiCall('generate-code', { note });
+const banner = document.getElementById('newCodeBanner');
+banner.style.display = 'block';
+banner.textContent = 'New code: ' + data.code;
+document.getElementById('noteInput').value = '';
+loadCodes();
+}catch(e){ alert('Could not generate a code. Try again.'); }
+}
+
+async function revoke(code){
+if(!confirm('Revoke ' + code + '? Patients using it will no longer be able to sign in with it.')) return;
+try{ await apiCall('revoke-code', { code }); loadCodes(); }
+catch(e){ alert('Could not revoke that code.'); }
+}
+
+if(adminKey){ loadCodes(); }
+</script>
+</body>
+</html>
