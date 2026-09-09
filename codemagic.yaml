@@ -1,0 +1,117 @@
+# Codemagic build configuration for Siddiqi 360.
+#
+# This file lets Codemagic's cloud Mac and Linux build machines compile,
+# sign, and (optionally) upload the app to TestFlight / Google Play —
+# entirely from a web dashboard. Nothing here needs to run on your own
+# computer. Push this repo to GitHub, connect it at codemagic.io, and
+# these workflows appear automatically.
+#
+# One-time setup still required in the Codemagic dashboard (not in this file):
+#   1. Connect your GitHub repo.
+#   2. Under the app's settings → Integrations, connect your Apple Developer
+#      account (App Store Connect API key) and your Google Play service account.
+#   3. Add environment variables under a group called "siddiqi360_secrets":
+#      SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, ADMIN_SECRET
+#      (only needed if you want Codemagic itself to deploy the web/Netlify
+#      side too — the native app builds below don't require them.)
+
+workflows:
+  ios-workflow:
+    name: Siddiqi 360 — iOS
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    integrations:
+      app_store_connect: siddiqi360_appstore
+    environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.teamsiddiqi.siddiqi360
+      vars:
+        XCODE_WORKSPACE: "ios/App/App.xcworkspace"
+        XCODE_SCHEME: "App"
+      node: 20.14.0
+      xcode: 26
+      cocoapods: default
+    triggering:
+      events:
+        - tag
+      tag_patterns:
+        - pattern: 'ios-*'
+          include: true
+    scripts:
+      - name: Assemble web assets
+        script: |
+          mkdir -p www
+          cp index.html manifest.json runner-mark.png www/
+          cp apple-touch-icon.png favicon-16.png favicon-32.png icon-192.png icon-512.png icon-512-maskable.png www/
+          cp -r images www/
+      - name: Install Capacitor dependencies
+        script: npm install
+      - name: Add iOS platform if missing
+        script: |
+          if [ ! -d "ios" ]; then
+            npx cap add ios
+          fi
+      - name: Sync web assets into the native project
+        script: npx cap sync ios
+      - name: Set up code signing
+        script: xcode-project use-profiles
+      - name: Increment build number
+        script: |
+          cd $CM_BUILD_DIR/ios/App
+          agvtool new-version -all $(($(app-store-connect get-latest-app-store-build-number "$APP_STORE_APPLE_ID") + 1))
+      - name: Build .ipa
+        script: |
+          xcode-project build-ipa \
+            --workspace "$XCODE_WORKSPACE" \
+            --scheme "$XCODE_SCHEME"
+    artifacts:
+      - build/ios/ipa/*.ipa
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
+        submit_to_app_store: false # flip to true only once you're ready for a public release
+
+  android-workflow:
+    name: Siddiqi 360 — Android
+    max_build_duration: 60
+    instance_type: linux_x2
+    environment:
+      android_signing:
+        - siddiqi360_keystore
+      vars:
+        PACKAGE_NAME: "com.teamsiddiqi.siddiqi360"
+      node: 20.14.0
+    triggering:
+      events:
+        - tag
+      tag_patterns:
+        - pattern: 'android-*'
+          include: true
+    scripts:
+      - name: Assemble web assets
+        script: |
+          mkdir -p www
+          cp index.html manifest.json runner-mark.png www/
+          cp apple-touch-icon.png favicon-16.png favicon-32.png icon-192.png icon-512.png icon-512-maskable.png www/
+          cp -r images www/
+      - name: Install Capacitor dependencies
+        script: npm install
+      - name: Add Android platform if missing
+        script: |
+          if [ ! -d "android" ]; then
+            npx cap add android
+          fi
+      - name: Sync web assets into the native project
+        script: npx cap sync android
+      - name: Build signed .aab
+        script: |
+          cd android
+          ./gradlew bundleRelease
+    artifacts:
+      - android/app/build/outputs/**/*.aab
+    publishing:
+      google_play:
+        credentials: $GOOGLE_PLAY_SERVICE_ACCOUNT_CREDENTIALS
+        track: internal # move to "production" once you're ready for a public release

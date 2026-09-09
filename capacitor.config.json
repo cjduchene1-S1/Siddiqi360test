@@ -1,0 +1,15 @@
+{
+  "appId": "com.teamsiddiqi.siddiqi360",
+  "appName": "Siddiqi 360",
+  "webDir": "www",
+  "backgroundColor": "#0A1B3D",
+  "ios": {
+    "contentInset": "always"
+  },
+  "plugins": {
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_siddiqi360",
+      "iconColor": "#DFA82C"
+    }
+  }
+}
