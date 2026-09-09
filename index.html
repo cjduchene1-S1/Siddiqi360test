@@ -459,12 +459,12 @@ cursor:pointer; margin-bottom:18px;
 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F4F3EE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 21 6 21 12c0 5-3.5 8.5-9 10-5.5-1.5-9-5-9-10L3 6z"/></svg>
 </div>
 <div style="font-family:'Outfit', sans-serif; font-size:20px; color:var(--ink); font-weight:500;">This app is for Dr. Siddiqi's patients</div>
-<div style="font-size:12.5px; color:var(--ink-soft); margin-top:10px; line-height:1.6;">Access is by invitation only, for patients with a scheduled surgery date at TCJR. Enter the code from your surgical packet or the text message our office sent you.</div>
+<div style="font-size:12.5px; color:var(--ink-soft); margin-top:10px; line-height:1.6;">Access is by invitation only, for patients with a scheduled surgery at TCJR. Enter the code from your surgical packet or the text message our office sent you. Everything you enter stays on this device only — nothing is sent to our office through this app.</div>
 <input id="accessCode" type="text" placeholder="Access code" style="margin-top:24px; width:100%; padding:14px 16px; border-radius:14px; border:1px solid var(--line); background:var(--card); font-family:'IBM Plex Mono', monospace; font-size:14px; text-align:center; letter-spacing:2px; color:var(--ink);">
 <div style="font-size:11px; color:var(--ink-soft); margin-top:16px; text-align:left; width:100%;">Your surgery date</div>
 <input id="surgeryDateInput" type="date" style="margin-top:6px; width:100%; padding:14px 16px; border-radius:14px; border:1px solid var(--line); background:var(--card); font-family:'IBM Plex Mono', monospace; font-size:13px; color:var(--ink);">
 <div id="signinError" style="font-size:11.5px; color:var(--restore); margin-top:10px; height:14px;"></div>
-<button onclick="attemptSignin()" style="margin-top:16px; background:var(--ink); color:#F4F3EE; border:none; padding:14px 30px; border-radius:30px; font-size:14px; font-weight:600; font-family:'Inter',sans-serif; cursor:pointer; width:100%;">Continue</button>
+<button id="signinBtn" onclick="attemptSignin()" style="margin-top:16px; background:var(--ink); color:#F4F3EE; border:none; padding:14px 30px; border-radius:30px; font-size:14px; font-weight:600; font-family:'Inter',sans-serif; cursor:pointer; width:100%;">Continue</button>
 <div style="font-size:11px; color:var(--ink-soft); margin-top:18px;">Not a patient yet? <a href="https://teamsiddiqiortho.com/contact-us/" target="_blank" rel="noopener" style="color:var(--ink);">Request a consultation</a></div>
 </div>
 <div class="status" style="position:relative; z-index:10;">
@@ -477,7 +477,7 @@ cursor:pointer; margin-bottom:18px;
 <div class="home-header-row">
 <div>
 <div class="eyebrow">Home</div>
-<div class="greet">Welcome back, <b>Michael</b></div>
+<div class="greet">Welcome back!</div>
 </div>
 <div class="bell-btn" onclick="previewNotification()">
 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A1B3D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
@@ -659,6 +659,11 @@ cursor:pointer; margin-bottom:18px;
 <div class="eyebrow" style="margin-bottom:6px;">Your progress</div>
 <div style="font-size:11.5px; color:var(--ink-soft); line-height:1.6; margin-bottom:10px;">Checkmarks and pain logs are saved on this device only. Reset to start completely blank.</div>
 <div id="resetBtn" onclick="resetProgress()" style="text-align:center; padding:11px; border-radius:12px; background:var(--restore-tint); color:var(--restore); font-size:12.5px; font-weight:600; cursor:pointer;">Reset all progress</div>
+</div>
+<div class="card">
+<div class="eyebrow" style="margin-bottom:6px;">This device</div>
+<div style="font-size:11.5px; color:var(--ink-soft); line-height:1.6; margin-bottom:10px;">You're kept signed in on this device so you don't have to re-enter your access code and surgery date each time. Sign out if this isn't your device, or if someone else needs to sign in.</div>
+<div onclick="signOut()" style="text-align:center; padding:11px; border-radius:12px; background:var(--optimize-tint); color:var(--optimize); font-size:12.5px; font-weight:600; cursor:pointer;">Sign out</div>
 </div>
 <div class="card">
 <div class="eyebrow" style="margin-bottom:6px;">Your care team</div>
@@ -887,30 +892,30 @@ document.getElementById(map[key]).innerHTML = liveMilestones[key].map((ms,idx)=>
 }
 // -------- LEARN ARTICLES --------
 const articlesOptimization = [
-{pillar:'Perioperative Optimization', color:'thrive', icon:'leaf', photo:'images/enroute-nutrition.jpg', title:'What ENROUTE nutrition actually does', body:"ENROUTE is a medical-grade surgical nutrition program, not a generic protein shake. It supplies 26 grams of leucine-rich protein isolate per serving along with creatine, calcium, and vitamin D, taken twice daily for two weeks before and two weeks after surgery. The rationale is straightforward: surgery is a metabolic stressor, and most patients cannot realistically eat their way to the protein target their tissue needs for repair. It is not a meal replacement, and it is not a substitute for a well-balanced diet, it is there to close the gap food alone usually cannot."},
-{pillar:'Perioperative Optimization', color:'thrive', icon:'device', title:'What ROMTech Portable Connect does for your recovery', body:"For select patients, I prescribe the ROMTech Portable Connect, a stationary bike delivered to your home that enables gentle, therapeutic movement within a comfortable range of motion. A ROMTech field clinician sets it up and shows you how to use it, and treatment plans typically run 3 weeks with 3 to 5 short home sessions a day. The device automatically measures your range of motion and shares that data with me, so I know how you're progressing between visits without you having to remember to report it. Most insurance plans approve it. If yours doesn't, it's a bonus, not a requirement, walking remains the foundation of your recovery either way."},
-{pillar:'Perioperative Optimization', color:'thrive', icon:'box', title:'What\u2019s in your QR Recovery Box', body:"About 24 to 48 hours after surgery, a Quality Recovery box arrives at your home. It includes a cryotherapy and compression device for swelling and pain control, a TENS unit, EdemaWear compression garments, collagen wound dressings, and printed recovery support resources. Everything in the box is chosen to make the first two weeks, the hardest stretch, more manageable without you having to source any of it yourself."},
-{pillar:'Perioperative Optimization', color:'thrive', icon:'molecule', title:'Peptide therapy: what it is, and where I stand', evidence:'Elective · by referral to RX Wellness', body:"Some patients ask about peptide therapy, specifically a combination often called the Wolverine Stack, as part of perioperative optimization. It pairs two research compounds, BPC-157 and TB-500, studied for their role in tissue repair and inflammation control. I want to be direct about where the evidence stands: most of what we know comes from preclinical and animal research, human data is still limited, and neither compound is FDA-approved for this use. Because of that, I don't administer or manage it myself. Interested patients are referred to RX Wellness Recovery Program, an affiliated physician-supervised clinic built specifically around nutritional optimization and peptide-based recovery protocols, before and after surgery. You'll receive a text and email about scheduling that consultation about 4 weeks before your date if you'd like to explore it. It is not a substitute for anything in your mandatory recovery protocol, and it's entirely your choice whether to pursue it."},
+{pillar:'Perioperative Optimization', color:'thrive', icon:'leaf', photo:'images/enroute-nutrition.jpg', photoPos:'center', title:'What ENROUTE nutrition actually does', body:"ENROUTE is a medical-grade surgical nutrition program, not a generic protein shake. It supplies 26 grams of leucine-rich protein isolate per serving along with creatine, calcium, and vitamin D, taken twice daily for two weeks before and two weeks after surgery. The rationale is straightforward: surgery is a metabolic stressor, and most patients cannot realistically eat their way to the protein target their tissue needs for repair. It is not a meal replacement, and it is not a substitute for a well-balanced diet, it is there to close the gap food alone usually cannot."},
+{pillar:'Perioperative Optimization', color:'thrive', icon:'device', photo:'images/romtech.jpg', title:'What ROMTech Portable Connect does for your recovery', body:"For select patients, I prescribe the ROMTech Portable Connect, a stationary bike delivered to your home that enables gentle, therapeutic movement within a comfortable range of motion. A ROMTech field clinician sets it up and shows you how to use it, and treatment plans typically run 3 weeks with 3 to 5 short home sessions a day. The device automatically measures your range of motion and shares that data with me, so I know how you're progressing between visits without you having to remember to report it. Most insurance plans approve it. If yours doesn't, it's a bonus, not a requirement, walking remains the foundation of your recovery either way."},
+{pillar:'Perioperative Optimization', color:'thrive', icon:'box', photo:'images/qr-recovery-box.jpg', title:'What\u2019s in your QR Recovery Box', body:"About 24 to 48 hours after surgery, a Quality Recovery box arrives at your home. It includes a cryotherapy and compression device for swelling and pain control, a TENS unit, EdemaWear compression garments, collagen wound dressings, and printed recovery support resources. Everything in the box is chosen to make the first two weeks, the hardest stretch, more manageable without you having to source any of it yourself."},
+{pillar:'Perioperative Optimization', color:'thrive', icon:'molecule', photo:'images/rx-wellness.jpg', photoFit:'contain', title:'Peptide therapy: what it is, and where I stand', evidence:'Elective \u00b7 by referral to RX Wellness', body:"Some patients ask about peptide therapy, specifically a combination often called the Wolverine Stack, as part of perioperative optimization. It pairs two research compounds, BPC-157 and TB-500, studied for their role in tissue repair and inflammation control. I want to be direct about where the evidence stands: most of what we know comes from preclinical and animal research, human data is still limited, and neither compound is FDA-approved for this use. Because of that, I don't administer or manage it myself. Interested patients are referred to RX Wellness Recovery Program, an affiliated physician-supervised clinic built specifically around nutritional optimization and peptide-based recovery protocols, before and after surgery. You'll receive a text and email about scheduling that consultation about 4 weeks before your date if you'd like to explore it. It is not a substitute for anything in your mandatory recovery protocol, and it's entirely your choice whether to pursue it."},
 ];
 const articlesShared = [
 {pillar:'Understanding Your Surgery', color:'optimize', icon:'robot', photo:'images/robotic-assisted-joint-replacement.jpg', title:'What is robotic-assisted joint replacement?', body:"A CT scan builds a 3D model of your joint before surgery. The robotic arm then helps guide precise bone preparation, implant placement, leg alignment, and soft tissue balance, while I remain in full control throughout the case. Neither traditional nor robotic surgery cuts the muscles or tendons. The difference is precision in the cuts and the plan behind them."},
 {pillar:'Recovery Pearls', color:'thrive', icon:'swelling', photo:'images/swelling-and-bruising.jpg', title:'Why swelling and bruising are normal', body:"It is normal to have significant swelling in the operative leg, sometimes down to the ankle and toes, and bruising that travels and darkens before it fades. Both can look worse for about a week before they improve. Elevate the leg above heart level for 30 to 60 minutes, 4 to 5 times a day, and ice for 20 minutes on and 20 minutes off. The more active you are, the more you need to elevate."},
 {pillar:'Recovery Pearls', color:'thrive', icon:'moon', photo:'images/sleep-disruption.jpg', title:'Sleep disruption after surgery is common', body:"Up to 85 percent of patients notice some disturbance in their sleep in the weeks after joint replacement, trouble falling asleep, staying asleep, or waking early. Avoid caffeine after 9pm, skip the cat nap, and keep a regular bedtime. Elevate your leg during the day to reduce swelling that builds up at night, and a pillow between the knees helps if you sleep on your side."},
 {pillar:'Life After Surgery', color:'ink', icon:'car', photo:'images/when-can-i-drive.jpg', title:'When can I drive again?', body:"You need to be off prescription pain medicine, comfortable, and physically able to slam on the brakes if needed. Average time before driving is 2 to 4 weeks, though this varies by procedure and by patient. You do not need our approval, just good judgment."},
-{pillar:'Life After Surgery', color:'ink', icon:'growth', title:'When can I return to work?', body:"Most patients are out of work for 6 to 8 weeks. If your job is physically demanding, it may be closer to 3 months. We expect all patients to be back to work within three months of surgery, and can provide documentation for short-term disability along the way."},
-{pillar:'Life After Surgery', color:'ink', icon:'plane', title:'Flying and travel after surgery', body:"Short flights are generally fine at 4 to 6 weeks, with longer trips at 3 months. Walk the cabin periodically to reduce clot risk, and take an 81mg aspirin the morning and night of travel if you are not already on a blood thinner. You may set off metal detectors; simply tell the security agent you have a joint replacement."},
-{pillar:'Life After Surgery', color:'ink', icon:'shield', title:'Lifetime infection precautions', body:"An untreated infection anywhere else in the body can spread to your joint replacement, for life. Before dental cleanings, extractions, or other invasive procedures, you will need antibiotics one hour beforehand, typically Amoxicillin 2 grams, even years down the road. Wait 3 to 6 months after surgery before any elective dental work."},
+{pillar:'Life After Surgery', color:'ink', icon:'growth', photo:'images/return-to-work.jpg', title:'When can I return to work?', body:"Most patients are out of work for 6 to 8 weeks. If your job is physically demanding, it may be closer to 3 months. We expect all patients to be back to work within three months of surgery, and can provide documentation for short-term disability along the way."},
+{pillar:'Life After Surgery', color:'ink', icon:'plane', photo:'images/flying-and-travel.jpg', photoPos:'left', title:'Flying and travel after surgery', body:"Short flights are generally fine at 4 to 6 weeks, with longer trips at 3 months. Walk the cabin periodically to reduce clot risk, and take an 81mg aspirin the morning and night of travel if you are not already on a blood thinner. You may set off metal detectors; simply tell the security agent you have a joint replacement."},
+{pillar:'Life After Surgery', color:'ink', icon:'shield', photo:'images/lifetime-infection-precautions.jpg', photoPos:'18% center', title:'Lifetime infection precautions', body:"An untreated infection anywhere else in the body can spread to your joint replacement, for life. Before dental cleanings, extractions, or other invasive procedures, you will need antibiotics one hour beforehand, typically Amoxicillin 2 grams, even years down the road. Wait 3 to 6 months after surgery before any elective dental work."},
 ];
 const articlesHip = [
 {pillar:'Understanding Your Surgery', color:'optimize', icon:'hip-anatomy', photo:'images/total-hip-replacement.jpg', title:'What is a total hip replacement?', body:"When the hip joint wears to the point it can no longer do its job, an artificial hip takes its place. The acetabulum is replaced with an artificial liner, and the femur with an artificial stem. The most apparent benefit is dramatic pain relief. Almost all patients have complete, or near complete, relief, and as pain lessens, function and range of motion improve."},
 {pillar:'Surgical Philosophy', color:'restore', icon:'hip-approach', photo:'images/direct-anterior-approach.jpg', title:'The direct anterior approach, and your hip precautions', body:"I use a direct anterior approach to place your new hip, working between muscles rather than through them. Precautions last 3 months: be careful not to extend the leg fully back, and avoid extreme outward rotation of the foot. No lunges, no extreme yoga poses, and no soccer-style kicking motion during that window."},
-{pillar:'Understanding Your Surgery', color:'optimize', icon:'growth', photo:'images/team-siddiqi-logo.jpg', title:'How long will my hip replacement last?', body:"There is a common belief that replacements only last 10 years. That is not accurate. Most components implanted 20 years ago are still in place and working well. The estimated failure rate is about 0.5 percent per year, meaning roughly a 90 percent chance your implant is still working two decades from now."},
+{pillar:'Understanding Your Surgery', color:'optimize', icon:'growth', photo:'images/hip-replacement-longevity.jpg', title:'How long will my hip replacement last?', body:"There is a common belief that replacements only last 10 years. That is not accurate. Most components implanted 20 years ago are still in place and working well. The estimated failure rate is about 0.5 percent per year, meaning roughly a 90 percent chance your implant is still working two decades from now."},
 ];
 const articlesKnee = [
 {pillar:'Understanding Your Surgery', color:'optimize', icon:'knee-anatomy', photo:'images/total-knee-replacement.jpg', title:'What is a total knee replacement?', body:"When cartilage wears away, an artificial knee takes its place. Only the surface of the joint is removed, the arthritic ends of the bones are shaved and resurfaced with metal and plastic. The goal is pain relief, and often improved motion and alignment. It is one of the safest and most effective procedures in medicine."},
 {pillar:'Surgical Philosophy', color:'restore', icon:'knee-approach', photo:'images/muscle-sparing-knee.jpg', title:'What is muscle-sparing knee replacement?', body:"Traditional exposures cut through the quadriceps tendon and stitch it back together. The quadriceps is the workhorse muscle for walking and stairs after knee replacement. I use a true muscle-sparing technique that lifts and slides the muscle rather than cutting it, which we have found leads to less pain and a quicker recovery."},
-{pillar:'Life After Surgery', color:'ink', icon:'kneel', photo:'images/kneeling-after-knee-replacement.jpg', title:'Can I kneel after knee replacement?', body:"Many patients assume kneeling is off limits. There is currently no scientific evidence that kneeling damages the implant, so you are not restricted from it after surgery. Some patients simply find it uncomfortable at first; a padded surface under the knee can help."},
-{pillar:'Understanding Your Surgery', color:'optimize', icon:'growth', photo:'images/team-siddiqi-logo.jpg', title:'How long will my knee replacement last?', body:"The belief that replacements only last 10 years is a myth. Most components implanted 20 years ago are still functioning well today. The estimated failure rate is about 0.5 percent per year, so most patients can expect their implant to still be working two decades out."},
+{pillar:'Life After Surgery', color:'ink', icon:'kneel', photo:'images/kneeling-after-knee-replacement.jpg', photoPos:'center 68%', title:'Can I kneel after knee replacement?', body:"Many patients assume kneeling is off limits. There is currently no scientific evidence that kneeling damages the implant, so you are not restricted from it after surgery. Some patients simply find it uncomfortable at first; a padded surface under the knee can help."},
+{pillar:'Understanding Your Surgery', color:'optimize', icon:'growth', photo:'images/knee-replacement-longevity.jpg', title:'How long will my knee replacement last?', body:"The belief that replacements only last 10 years is a myth. Most components implanted 20 years ago are still functioning well today. The estimated failure rate is about 0.5 percent per year, so most patients can expect their implant to still be working two decades out."},
 ];
 const tint = {optimize:'var(--optimize-tint)', restore:'var(--restore-tint)', thrive:'var(--thrive-tint)', ink:'#E7E8E3'};
 const solid = {optimize:'var(--optimize)', restore:'var(--restore)', thrive:'var(--thrive)', ink:'var(--ink-soft)'};
@@ -931,7 +936,7 @@ document.getElementById('article-list').innerHTML = `
 </div>
 ` + list.map((a,i)=>`
 <div class="card article-card" style="padding:16px;" onclick="openArticle(${i})">
-<div class="art-hero" style="background:${tint[a.color]}; padding:0;">${a.photo ? `<img src="${a.photo}" style="width:100%; height:100%; object-fit:cover; display:block;">` : artIcon(a.icon, solidHex[a.color])}</div>
+<div class="art-hero" style="background:${tint[a.color]}; padding:0;">${a.photo ? `<img src="${a.photo}" style="width:100%; height:100%; object-fit:${a.photoFit || 'cover'}; object-position:${a.photoPos || 'top'}; display:block;">` : artIcon(a.icon, solidHex[a.color])}</div>
 <span class="pillar-tag" style="background:${tint[a.color]}; color:${solid[a.color]};">${a.pillar}</span>
 <div class="headline">${a.title}</div>
 <div class="meta">Dr. Ahmed Siddiqi</div>
@@ -948,7 +953,7 @@ document.getElementById('ovTitle').textContent = a.title;
 document.getElementById('ovBody').textContent = a.body;
 const artBox = document.getElementById('ovArt');
 artBox.style.background = tint[a.color];
-artBox.innerHTML = a.photo ? `<img src="${a.photo}" style="width:100%; height:100%; object-fit:cover; display:block;">` : artIcon(a.icon, solidHex[a.color]);
+artBox.innerHTML = a.photo ? `<img src="${a.photo}" style="width:100%; height:100%; object-fit:${a.photoFit || 'cover'}; object-position:${a.photoPos || 'top'}; display:block;">` : artIcon(a.icon, solidHex[a.color]);
 artBox.style.display = 'flex';
 const evEl = document.getElementById('ovEvidence');
 if(a.evidence){ evEl.style.display='inline-flex'; evEl.textContent = a.evidence; }
@@ -1520,20 +1525,50 @@ document.getElementById('painBars').innerHTML = painData.map((v,i)=>{
 const days=['M','T','W','T','F','S','S'];
 return `<div class="bar" style="height:${v*10}%;"><span>${days[i]}</span></div>`;
 }).join('');
-function attemptSignin(){
+async function attemptSignin(){
 const val = document.getElementById('accessCode').value.trim();
 const err = document.getElementById('signinError');
+const btn = document.getElementById('signinBtn');
 if(val.length < 4){
 err.textContent = 'Enter the access code from your packet or text message.';
 return;
 }
 const dateVal = document.getElementById('surgeryDateInput').value;
-if(dateVal){
-demoState.surgeryDate = dateVal;
-saveState();
+if(!dateVal){
+err.textContent = 'Enter your surgery date to continue.';
+return;
 }
 err.textContent = '';
+btn.textContent = 'Checking\u2026';
+btn.disabled = true;
+try{
+const res = await fetch('/.netlify/functions/validate-code', {
+method:'POST',
+headers:{ 'Content-Type':'application/json' },
+body: JSON.stringify({ code: val }),
+});
+const data = await res.json();
+if(!data.valid){
+err.textContent = 'That access code isn\u2019t recognized. Double check your packet or text message, or contact our office.';
+btn.textContent = 'Continue';
+btn.disabled = false;
+return;
+}
+}catch(e){
+err.textContent = 'Couldn\u2019t reach our server to verify your code. Check your connection and try again.';
+btn.textContent = 'Continue';
+btn.disabled = false;
+return;
+}
+demoState.accessCode = val;
+demoState.surgeryDate = dateVal;
+demoState.signedIn = true;
+saveState();
+btn.textContent = 'Continue';
+btn.disabled = false;
 goTo('home');
+await requestNotificationPermission();
+scheduleLocalNotifications();
 }
 function nearestDayIndex(){
 if(!demoState.surgeryDate) return 0; // no date on file yet: start at Day -30, the beginning of the journey
@@ -1547,6 +1582,54 @@ const diff = Math.abs(d.day - realDay);
 if(diff < closestDiff){ closestDiff = diff; closest = i; }
 });
 return closest;
+}
+function signOut(){
+demoState = { tasks:{}, ex:{}, pills:{}, pain:3 };
+saveState();
+goTo('splash');
+}
+// -------- NATIVE LOCAL NOTIFICATIONS (only active inside the Capacitor app build) --------
+// Schedules on-device reminders using the surgery date already stored locally.
+// No server ever sees these — Capacitor's LocalNotifications plugin hands the
+// schedule straight to iOS/Android, which is what lets a reminder pop up even
+// if the app hasn't been opened in days. On the plain web/PWA version,
+// window.Capacitor doesn't exist, so all of this quietly does nothing.
+const NOTIF_WINDOW_DAYS = 21; // stay well under iOS's 64-pending-notification cap
+async function requestNotificationPermission(){
+if(!window.Capacitor?.Plugins?.LocalNotifications) return false;
+const { LocalNotifications } = window.Capacitor.Plugins;
+const perm = await LocalNotifications.requestPermissions();
+return perm.display === 'granted';
+}
+async function scheduleLocalNotifications(){
+if(!window.Capacitor?.Plugins?.LocalNotifications) return; // web/PWA context: no-op
+if(!demoState.surgeryDate) return;
+const { LocalNotifications } = window.Capacitor.Plugins;
+try{
+const pending = await LocalNotifications.getPending();
+if(pending.notifications.length) await LocalNotifications.cancel(pending);
+}catch(e){ /* nothing pending yet, fine */ }
+const surgery = new Date(demoState.surgeryDate + 'T00:00:00');
+const notifications = [];
+let id = 1;
+for(let offset = -NOTIF_WINDOW_DAYS; offset <= NOTIF_WINDOW_DAYS; offset++){
+const fireDate = new Date(surgery);
+fireDate.setDate(fireDate.getDate() + offset);
+fireDate.setHours(9, 0, 0, 0); // one generic morning check-in per day, per Apple's guidance to keep notification content non-descriptive
+if(fireDate.getTime() <= Date.now()) continue; // never schedule in the past
+const hasContent = (taskMap[String(offset)] && taskMap[String(offset)].length) ||
+dayPoints.some(d => d.day === offset);
+if(!hasContent) continue;
+notifications.push({
+id: id++,
+title: 'Siddiqi 360',
+body: 'You have a reminder today \u2014 tap to view',
+schedule: { at: fireDate },
+});
+}
+if(notifications.length){
+await LocalNotifications.schedule({ notifications });
+}
 }
 function goTo(id){
 document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
@@ -1573,6 +1656,7 @@ renderMovePhaseTabs();
 renderExercises();
 applyPersistedChecks();
 if(window.Notification && Notification.permission === 'granted') startReminderScheduler();
+if(demoState.signedIn){ goTo('home'); scheduleLocalNotifications(); } // returning patient: skip splash and sign-in entirely, refresh the reminder queue
 }
 init();
 </script>
