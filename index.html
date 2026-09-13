@@ -1115,6 +1115,13 @@ ${ex.hold ? `<div class="ex-timer-row">
 document.getElementById('moveNote').textContent = "These are general guidelines. Your surgeon and physical therapy team may adjust pace, order, or specific exercises based on your progress. If any exercise increases pain, stop and let your team know.";
 applyPersistedChecks();
 }
+function openExLightbox(src){
+document.getElementById('exLightboxImg').src = src;
+document.getElementById('exLightbox').classList.add('open');
+}
+function closeExLightbox(){
+document.getElementById('exLightbox').classList.remove('open');
+}
 function toggleExCheck(id){
 const el = document.getElementById('chk-'+id);
 el.classList.toggle('done');
@@ -1692,13 +1699,6 @@ renderMedSchedule();
 renderSymptoms();
 renderMovePhaseTabs();
 renderExercises();
- function openExLightbox(src){
-document.getElementById('exLightboxImg').src = src;
-document.getElementById('exLightbox').classList.add('open');
-}
-function closeExLightbox(){
-document.getElementById('exLightbox').classList.remove('open');
-}
 applyPersistedChecks();
 if(window.Notification && Notification.permission === 'granted') startReminderScheduler();
 if(demoState.signedIn){ goTo('home'); scheduleLocalNotifications(); } // returning patient: skip splash and sign-in entirely, refresh the reminder queue
