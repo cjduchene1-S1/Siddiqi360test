@@ -467,6 +467,35 @@ h1.page-title { font-size: 28px !important; }
   max-width:100%; max-height:100%; border-radius:16px;
   box-shadow:0 20px 50px rgba(0,0,0,0.4);
 }
+
+.journey-hero{ margin:14px 0 4px; }
+.journey-title{ font-family:'Outfit', sans-serif; font-size:24px; font-weight:600; color:var(--ink); text-align:center; margin:8px 0 2px; padding:0 10px; }
+.journey-sub{ text-align:center; font-size:14px; color:var(--ink-soft); margin-bottom:14px; }
+.journey-path-wrap{ position:relative; width:100%; aspect-ratio:340/300; border-radius:20px; overflow:hidden; background:linear-gradient(#dfe6ef,#eef1ec); }
+.journey-bg{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.journey-path-svg{ position:absolute; inset:0; width:100%; height:100%; z-index:1; }
+.journey-pin{ position:absolute; z-index:3; display:flex; flex-direction:column; align-items:center; transform:translate(-50%,-100%); left:88%; top:20%; transition:left .3s ease, top .3s ease; }
+.journey-pin .pin-label{ background:rgba(10,27,61,0.88); color:#F4F3EE; font-size:11px; font-weight:600; text-align:center; padding:6px 10px; border-radius:10px; line-height:1.4; margin-bottom:4px; white-space:nowrap; }
+.journey-pin .pin-dot{ width:14px; height:14px; border-radius:50%; background:#F4F3EE; border:3px solid var(--thrive); box-shadow:0 2px 6px rgba(0,0,0,0.3); }
+.journey-stage{ position:absolute; z-index:2; display:flex; flex-direction:column; align-items:center; transform:translate(-50%,-50%); width:100px; }
+.stage-badge{ width:46px; height:46px; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 10px rgba(0,0,0,0.25); border:3px solid #fff; margin-bottom:6px; }
+.stage-label{ font-family:'Outfit', sans-serif; font-size:13px; font-weight:600; background:rgba(255,255,255,0.9); padding:2px 8px; border-radius:10px; }
+.stage-caption{ font-size:10.5px; color:var(--ink); text-align:center; line-height:1.35; margin-top:4px; background:rgba(255,255,255,0.85); padding:2px 6px; border-radius:8px; }
+.day-summary-card{ padding:0; overflow:hidden; margin-top:16px; }
+.day-summary-day{ font-family:'Outfit', sans-serif; font-size:32px; font-weight:600; color:var(--ink); padding:18px 20px 0; }
+.day-summary-phase{ font-family:'Inter', sans-serif; font-size:13px; font-weight:700; letter-spacing:1.5px; padding:2px 20px 10px; }
+.day-summary-text{ font-size:16px; color:var(--ink-soft); line-height:1.6; padding:0 20px 16px; }
+.day-summary-photo-wrap{ width:100%; aspect-ratio:2/1; overflow:hidden; }
+.day-summary-photo{ width:100%; height:100%; object-fit:cover; display:block; }
+.quote-card{ background:var(--thrive-tint); border-radius:16px; padding:16px 18px; display:flex; gap:12px; align-items:flex-start; margin-top:14px; }
+.quote-text{ font-family:'Outfit', sans-serif; font-style:italic; font-size:14.5px; color:#2C4A2F; line-height:1.5; margin:0; }
+.progress-card{ background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px 16px; display:flex; align-items:center; gap:12px; margin-top:14px; }
+.progress-info{ flex:1; }
+.progress-title{ font-size:13.5px; font-weight:600; color:var(--ink); }
+.progress-sub{ font-size:11.5px; color:var(--ink-soft); margin-top:2px; }
+.progress-dots{ display:flex; gap:6px; }
+.progress-dots .p-dot{ width:14px; height:14px; border-radius:50%; background:var(--line); }
+.progress-dots .p-dot.done{ background:var(--thrive); }
 </style>
 </head>
 <body>
@@ -523,34 +552,60 @@ h1.page-title { font-size: 28px !important; }
 <div class="proc-btn" data-proc="knee" onclick="setProcedure('knee')">Knee · Muscle-Sparing</div>
 </div>
 <div class="day-chips" id="dayChips"></div>
-<div class="ring-wrap">
-<div class="ring">
-<div class="ring-marker" id="ringMarker"></div>
-<div class="ring-center">
-<div class="day" id="ringDay">−18</div>
-<div class="phase" id="ringPhase">Optimize</div>
-<div class="phase-desc" id="ringDesc">days until surgery</div>
+<div class="journey-hero" id="journeyHero">
+<h1 class="journey-title">Your Recovery Journey</h1>
+<div class="journey-sub">Progress today. A stronger tomorrow.</div>
+<div class="journey-path-wrap">
+<img class="journey-bg" src="images/journey-hero.jpg" alt="">
+<svg class="journey-path-svg" viewBox="0 0 340 220" preserveAspectRatio="none">
+<path d="M20 190 Q 90 150 160 155 T 320 60" fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round" opacity="0.92"/>
+</svg>
+<div class="journey-pin" id="journeyPin">
+<div class="pin-label" id="pinLabel">You are here!<br><span id="pinDay">Day +90</span></div>
+<div class="pin-dot"></div>
+</div>
+<div class="journey-stage" style="left:10%; top:82%;">
+<div class="stage-badge" style="background:var(--optimize);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17c0-2 1-3 3-3h2l4-4 3 1 4 4h2c1 0 2 1 2 2v1H4z"/><path d="M8 14l2-5"/></svg></div>
+<div class="stage-label" style="color:var(--optimize)">Optimize</div>
+<div class="stage-caption">Pre-surgery to<br>early recovery</div>
+</div>
+<div class="journey-stage" style="left:48%; top:60%;">
+<div class="stage-badge" style="background:var(--restore);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 12h12M4 9v6M20 9v6M7 7v10M17 7v10"/></svg></div>
+<div class="stage-label" style="color:var(--restore)">Restore</div>
+<div class="stage-caption">Build strength<br>and mobility</div>
+</div>
+<div class="journey-stage" style="left:88%; top:20%;">
+<div class="stage-badge" style="background:var(--thrive);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2"/><path d="M12 7v6M12 13l-4 6M12 13l4 6M8 10l4 1 4-1"/></svg></div>
+<div class="stage-label" style="color:var(--thrive)">Thrive</div>
+<div class="stage-caption">Get back to<br>what you love</div>
 </div>
 </div>
 </div>
-<div class="legend">
-<div class="dot-label"><span class="dot" style="background:var(--optimize)"></span>Optimize</div>
-<div class="dot-label"><span class="dot" style="background:var(--restore)"></span>Restore</div>
-<div class="dot-label"><span class="dot" style="background:var(--thrive)"></span>Thrive</div>
-</div>
-<div class="streak-row">
-<div class="streak-badge">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F4F3EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
-0 day streak
-</div>
-<div class="badge-row">
-<div class="badge-dot">·</div>
-<div class="badge-dot">·</div>
-<div class="badge-dot">·</div>
-<div class="badge-dot">·</div>
+<div class="card day-summary-card">
+<div class="day-summary-day" id="daySummaryDay">Day +90</div>
+<div class="day-summary-phase" id="daySummaryPhase">THRIVE</div>
+<div class="day-summary-text" id="daySummaryText">You're making great progress and getting back to the activities that matter.</div>
+<div class="day-summary-photo-wrap">
+<img class="day-summary-photo" id="daySummaryPhoto" src="images/thrive-lifestyle.jpg" alt="">
 </div>
 </div>
-<div class="eyebrow" style="margin-bottom:8px;">Today</div>
+<div class="quote-card">
+<div class="quote-leaf">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3F6B45" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 4 13V7a1 1 0 0 1 1-1h1a7 7 0 0 1 7 7v1a7 7 0 0 1-2 5z"/><path d="M11 20a7 7 0 0 0 7-7v-1a1 1 0 0 0-1-1h-1a7 7 0 0 0-7 7v1"/></svg>
+</div>
+<p class="quote-text" id="quoteText">"Progress looks different for everyone. Keep going, you're doing great."</p>
+</div>
+<div class="progress-card">
+<div class="progress-icon">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0A1B3D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/><path d="m9 15 2 2 4-4"/></svg>
+</div>
+<div class="progress-info">
+<div class="progress-title">Today's progress</div>
+<div class="progress-sub" id="progressSub">0 of 4 activities complete</div>
+</div>
+<div class="progress-dots" id="progressDots"></div>
+</div>
+<div class="eyebrow" style="margin-bottom:8px; margin-top:20px;">Today</div>
 <div class="card" id="taskCard"></div>
 <div id="shopSection"></div>
 <div class="eyebrow" style="margin-bottom:8px;">From Dr. Siddiqi</div>
@@ -830,21 +885,61 @@ function renderDayChips(){
 const wrap = document.getElementById('dayChips');
 wrap.innerHTML = dayPoints.map((d,i)=>`<div class="day-chip ${i===currentDayIndex?'active':''}" onclick="setDay(${i})">Day ${d.label}</div>`).join('');
 }
+const phaseQuotes = {
+optimize:'Every step now sets up an easier recovery later.',
+restore:'Protecting the repair while you get moving again.',
+thrive:'Progress looks different for everyone. Keep going, you\'re doing great.'
+};
+const phasePhotos = {
+optimize:'images/optimize-lifestyle.jpg',
+restore:'images/restore-lifestyle.jpg',
+thrive:'images/thrive-lifestyle.jpg'
+};
+const phaseSummary = {
+optimize:'Getting your body ready for surgery day.',
+restore:'Protecting your new joint while you get moving again.',
+thrive:'You\'re making great progress and getting back to the activities that matter.'
+};
+const pinPositions = { optimize:{left:'12%', top:'80%'}, restore:{left:'50%', top:'55%'}, thrive:{left:'86%', top:'18%'} };
+function renderJourneyHero(d){
+document.getElementById('daySummaryDay').textContent = 'Day ' + d.label;
+const phaseEl = document.getElementById('daySummaryPhase');
+phaseEl.textContent = phaseLabel[d.phase].toUpperCase();
+phaseEl.style.color = phaseColor[d.phase];
+document.getElementById('daySummaryText').textContent = phaseSummary[d.phase];
+document.getElementById('daySummaryPhoto').src = phasePhotos[d.phase];
+document.getElementById('quoteText').textContent = '\u201c' + phaseQuotes[d.phase] + '\u201d';
+const pin = document.getElementById('journeyPin');
+const pos = pinPositions[d.phase];
+pin.style.left = pos.left;
+pin.style.top = pos.top;
+document.getElementById('pinDay').textContent = 'Day ' + d.label;
+}
+function updateProgressDots(){
+const day = dayPoints[currentDayIndex].day;
+const tasks = taskMap[String(day)] || [];
+const total = tasks.length;
+let doneCount = 0;
+tasks.forEach((t,i)=>{ if(demoState.tasks['task-'+day+'-'+i]) doneCount++; });
+document.getElementById('progressSub').textContent = doneCount + ' of ' + Math.max(total,1) + ' activities complete';
+const dotsEl = document.getElementById('progressDots');
+dotsEl.innerHTML = '';
+for(let i=0;i<Math.max(total,1);i++){
+const dot = document.createElement('div');
+dot.className = 'p-dot' + (i<doneCount ? ' done' : '');
+dotsEl.appendChild(dot);
+}
+}
 function setDay(i){
 currentDayIndex = i;
 const d = dayPoints[i];
-document.getElementById('ringDay').textContent = d.label;
-document.getElementById('ringPhase').textContent = phaseLabel[d.phase];
-document.getElementById('ringPhase').style.color = phaseColor[d.phase];
-document.getElementById('ringDesc').textContent = d.desc;
-const marker = document.getElementById('ringMarker');
-marker.style.background = phaseColor[d.phase];
-marker.style.transform = `rotate(${d.angle}deg) translate(105px) rotate(-${d.angle}deg) translate(-7px,-7px)`;
+renderJourneyHero(d);
 renderDayChips();
 renderTasks(d.day);
 renderShop(d.day);
 renderMedSchedule();
 renderWalkTargets(d.day);
+updateProgressDots();
 }
 function renderTasks(day){
 const tasks = taskMap[String(day)] || [];
@@ -863,6 +958,7 @@ el.classList.toggle('done');
 el.nextElementSibling.classList.toggle('done');
 const id = el.dataset.taskId;
 if(id){ demoState.tasks[id] = el.classList.contains('done'); saveState(); }
+updateProgressDots();
 }
 // -------- JOURNEY MILESTONES --------
 const milestonesShared = {
