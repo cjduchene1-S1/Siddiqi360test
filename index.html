@@ -456,6 +456,17 @@ h1.page-title { font-size: 28px !important; }
 .ex-purpose { font-size: 14px !important; }
 .ex-steps { font-size: 15.5px !important; line-height: 1.85 !important; }
 .pain-val { font-size: 34px !important; }
+ .ex-art{ cursor:zoom-in; }
+.ex-lightbox{
+  position:fixed; inset:0; z-index:200; background:rgba(10,27,61,0.92);
+  display:none; align-items:center; justify-content:center; padding:24px;
+  cursor:zoom-out;
+}
+.ex-lightbox.open{ display:flex; }
+.ex-lightbox img{
+  max-width:100%; max-height:100%; border-radius:16px;
+  box-shadow:0 20px 50px rgba(0,0,0,0.4);
+}
 </style>
 </head>
 <body>
@@ -712,6 +723,10 @@ h1.page-title { font-size: 28px !important; }
 <div class="evidence-tag" id="ovEvidence" style="display:none;"></div>
 <div id="ovBody"></div>
 </div>
+</div>
+ <!-- EXERCISE PHOTO LIGHTBOX -->
+<div class="ex-lightbox" id="exLightbox" onclick="closeExLightbox()">
+<img id="exLightboxImg" src="" alt="">
 </div>
 <!-- TAB BAR -->
 <div class="tabbar">
@@ -1079,7 +1094,7 @@ function renderExercises(){
 const list = getExercises(currentMovePhase);
 document.getElementById('exerciseList').innerHTML = list.map(ex=>`
 <div class="card ex-card">
-<div class="ex-art">${ex.photo ? `<img src="${ex.photo}" style="width:100%; height:100%; object-fit:cover; object-position:${ex.photoPos || 'center'}; display:block;">` : exIcon(ex.icon)}</div>
+<div class="ex-art">${ex.photo ? `<img src="${ex.photo}" style="width:100%; height:100%; object-fit:cover; object-position:${ex.photoPos || 'center'}; display:block;" onclick="openExLightbox('${ex.photo}')">` : exIcon(ex.icon)}</div>
 <div class="ex-body">
 <div style="display:flex; align-items:flex-start;">
 <div>
@@ -1677,6 +1692,13 @@ renderMedSchedule();
 renderSymptoms();
 renderMovePhaseTabs();
 renderExercises();
+ function openExLightbox(src){
+document.getElementById('exLightboxImg').src = src;
+document.getElementById('exLightbox').classList.add('open');
+}
+function closeExLightbox(){
+document.getElementById('exLightbox').classList.remove('open');
+}
 applyPersistedChecks();
 if(window.Notification && Notification.permission === 'granted') startReminderScheduler();
 if(demoState.signedIn){ goTo('home'); scheduleLocalNotifications(); } // returning patient: skip splash and sign-in entirely, refresh the reminder queue
