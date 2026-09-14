@@ -415,6 +415,10 @@ gap:2px; color:var(--ink-soft); cursor:pointer;
 .tab.active{ color:var(--ink); }
 .tab-emoji{ font-size:26px; line-height:1; filter:grayscale(45%) opacity(0.75); }
 .tab.active .tab-emoji{ filter:none; transform:scale(1.08); }
+.tab-icon{ width:26px; height:26px; object-fit:contain; display:block; filter:grayscale(45%) opacity(0.75); }
+.tab.active .tab-icon{ filter:none; transform:scale(1.08); }
+.tab-icon-photo{ width:24px; height:24px; object-fit:cover; border-radius:7px; display:block; filter:grayscale(45%) opacity(0.75); }
+.tab.active .tab-icon-photo{ filter:none; transform:scale(1.08); }
 .tab span{ font-size:10px; font-family:'Outfit', sans-serif; font-weight:600; letter-spacing:0; margin-top:2px; text-transform:capitalize; }
 /* ---------- OVERLAY (article detail) ---------- */
 .overlay{
@@ -790,27 +794,27 @@ h1.page-title { font-size: 28px !important; }
 <!-- TAB BAR -->
 <div class="tabbar">
 <div class="tab active" data-tab="home" onclick="goTo('home')">
-<span class="tab-emoji">🏠</span>
+<img class="tab-icon" src="images/tab-home.png" alt="">
 <span>HOME</span>
 </div>
 <div class="tab" data-tab="journey" onclick="goTo('journey')">
-<span class="tab-emoji">🧭</span>
+<img class="tab-icon" src="images/tab-journey.png" alt="">
 <span>JOURNEY</span>
 </div>
 <div class="tab" data-tab="move" onclick="goTo('move')">
-<span class="tab-emoji">🏃</span>
+<img class="tab-icon" src="images/tab-move.png" alt="">
 <span>MOVE</span>
 </div>
 <div class="tab" data-tab="meds" onclick="goTo('meds')">
-<span class="tab-emoji">💊</span>
+<img class="tab-icon" src="images/tab-meds.png" alt="">
 <span>MEDS</span>
 </div>
 <div class="tab" data-tab="learn" onclick="goTo('learn')">
-<span class="tab-emoji">📖</span>
+<img class="tab-icon" src="images/tab-learn.png" alt="">
 <span>LEARN</span>
 </div>
 <div class="tab" data-tab="track" onclick="goTo('track')">
-<span class="tab-emoji">📊</span>
+<img class="tab-icon" src="images/tab-track.png" alt="">
 <span>TRACK</span>
 </div>
 </div>
