@@ -78,17 +78,18 @@ letter-spacing:2px; text-transform:uppercase;
 }
 #splash .mark span{ color:#C9A054; }
 #splash .tagline{
-margin-top:14px; font-family:'IBM Plex Mono', monospace; font-size:12px;
-letter-spacing:3px; color:#9AA6B5; text-transform:uppercase;
+margin-top:14px; font-family:'Inter', sans-serif; font-weight:600; font-size:12px;
+letter-spacing:2px; color:#9AA6B5; text-transform:uppercase;
 }
 #splash .sub{
 margin-top:28px; color:#C7CCD6; font-size:14.5px; line-height:1.6; max-width:270px;
+text-transform:uppercase; letter-spacing:0.4px; font-weight:500;
 }
 #splash button{
 margin-top:46px; background:var(--gold); color:var(--ink); border:none;
 padding:14px 34px; border-radius:30px; font-size:14px; font-weight:700;
-font-family:'Inter',sans-serif; letter-spacing:0.3px; cursor:pointer;
-box-shadow:0 10px 24px rgba(223,168,44,0.28);
+font-family:'Inter',sans-serif; letter-spacing:0.5px; cursor:pointer;
+box-shadow:0 10px 24px rgba(223,168,44,0.28); text-transform:uppercase;
 }
 /* ---------- SHARED ---------- */
 h1.page-title{
@@ -515,11 +516,7 @@ h1.page-title { font-size: 28px !important; }
 </div>
 <!-- SPLASH -->
 <div class="screen active" id="splash" style="position:absolute; inset:0; z-index:45;">
-<div style="width:96px; height:96px; border-radius:50%; background:#FAF9F6; display:flex; align-items:center; justify-content:center; margin-bottom:18px; box-shadow:0 10px 26px rgba(0,0,0,0.28);">
-<img src="runner-mark.png" alt="Team Siddiqi" style="height:76%; width:auto; display:block;">
-</div>
-<div class="mark">Siddiqi<span> 360</span><span style="font-size:14px; vertical-align:top; color:#C9A054; margin-left:2px;">™</span></div>
-<div class="tagline">Optimize · Restore · Thrive</div>
+<img src="apple-touch-icon.png" alt="Siddiqi 360" style="width:250px; height:250px; border-radius:44px; margin-bottom:22px; box-shadow:0 14px 34px rgba(0,0,0,0.3); display:block;">
 <div class="sub">Your perioperative journey, guided day by day, from your surgeon.</div>
 <button onclick="goTo('signin')">Begin</button>
 </div>
