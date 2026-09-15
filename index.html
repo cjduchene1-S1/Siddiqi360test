@@ -75,7 +75,7 @@ padding:0;
 .splash-frame{
 position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
 }
-.splash-bg-img{ width:100%; height:100%; object-fit:contain; object-position:center; display:block; }
+.splash-bg-img{ width:100%; height:100%; object-fit:cover; object-position:32% center; display:block; }
 .splash-tap-layer{
 position:absolute; inset:0; width:100%; height:100%;
 background:transparent; border:none; cursor:pointer; z-index:2; padding:0;
@@ -466,10 +466,10 @@ h1.page-title { font-size: 28px !important; }
 .journey-hero{ margin:14px 0 4px; }
 .journey-title{ font-family:'Outfit', sans-serif; font-size:24px; font-weight:600; color:var(--ink); text-align:center; margin:8px 0 2px; padding:0 10px; }
 .journey-sub{ text-align:center; font-size:14px; color:var(--ink-soft); margin-bottom:14px; }
-.journey-path-wrap{ position:relative; width:100%; aspect-ratio:3/2; border-radius:20px; overflow:hidden; background:linear-gradient(#dfe6ef,#eef1ec); }
-.journey-bg{ position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; }
+.journey-path-wrap{ position:relative; width:100%; aspect-ratio:340/307; border-radius:20px; overflow:hidden; background:linear-gradient(#dfe6ef,#eef1ec); }
+.journey-bg{ position:absolute; top:0; left:0; width:100%; height:73.9%; object-fit:cover; }
 .journey-path-svg{ position:absolute; top:0; left:0; width:100%; height:100%; z-index:1; }
-.journey-pin{ position:absolute; z-index:3; display:flex; flex-direction:column; align-items:center; transform:translate(-50%,-100%); left:80%; top:28%; transition:left .3s ease, top .3s ease; }
+.journey-pin{ position:absolute; z-index:3; display:flex; flex-direction:column; align-items:center; transform:translate(-50%,-100%); left:84%; top:32%; transition:left .3s ease, top .3s ease; }
 .journey-pin .pin-label{ background:rgba(10,27,61,0.88); color:#F4F3EE; font-size:11px; font-weight:600; text-align:center; padding:6px 10px; border-radius:10px; line-height:1.4; margin-bottom:4px; white-space:nowrap; }
 .journey-pin .pin-dot{ width:14px; height:14px; border-radius:50%; background:#F4F3EE; border:3px solid var(--thrive); box-shadow:0 2px 6px rgba(0,0,0,0.3); }
 .journey-stage{ position:absolute; z-index:2; display:flex; flex-direction:column; align-items:center; transform:translate(-50%,-50%); width:100px; }
@@ -547,26 +547,22 @@ h1.page-title { font-size: 28px !important; }
 <h1 class="journey-title">Your Recovery Journey</h1>
 <div class="journey-sub">Progress today. A stronger tomorrow.</div>
 <div class="journey-path-wrap">
-<img class="journey-bg" src="images/journey-hero.jpg" alt="">
-<svg class="journey-path-svg" viewBox="0 0 340 220" preserveAspectRatio="none">
-<path d="M 0.0 212.4 L 298.8 88.7" fill="none" stroke="rgba(10,27,61,0.32)" stroke-width="10" stroke-linecap="round" transform="translate(0,3)"/>
-<path d="M 0.0 212.4 L 298.8 88.7" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" opacity="0.95"/>
-</svg>
+<img class="journey-bg" src="images/journey-hero.jpg" alt="" style="height:73.9%;">
 <div class="journey-pin" id="journeyPin">
 <div class="pin-label" id="pinLabel">You are here!<br><span id="pinDay">Day +90</span></div>
 <div class="pin-dot"></div>
 </div>
-<div class="journey-stage" style="left:10%; top:62%;">
+<div class="journey-stage" style="left:12%; top:66%;">
 <div class="stage-badge" style="background:var(--optimize);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17c0-2 1-3 3-3h2l4-4 3 1 4 4h2c1 0 2 1 2 2v1H4z"/><path d="M8 14l2-5"/></svg></div>
 <div class="stage-label" style="color:var(--optimize)">Optimize</div>
 <div class="stage-caption">Pre-surgery to<br>early recovery</div>
 </div>
-<div class="journey-stage" style="left:44%; top:66%;">
+<div class="journey-stage" style="left:48%; top:49%;">
 <div class="stage-badge" style="background:var(--restore);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 12h12M4 9v6M20 9v6M7 7v10M17 7v10"/></svg></div>
 <div class="stage-label" style="color:var(--restore)">Restore</div>
 <div class="stage-caption">Build strength<br>and mobility</div>
 </div>
-<div class="journey-stage" style="left:80%; top:28%;">
+<div class="journey-stage" style="left:84%; top:32%;">
 <div class="stage-badge" style="background:var(--thrive);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2"/><path d="M12 7v6M12 13l-4 6M12 13l4 6M8 10l4 1 4-1"/></svg></div>
 <div class="stage-label" style="color:var(--thrive)">Thrive</div>
 <div class="stage-caption">Get back to<br>what you love</div>
@@ -900,7 +896,7 @@ optimize:'Getting your body ready for surgery day.',
 restore:'Protecting your new joint while you get moving again.',
 thrive:'You\'re making great progress and getting back to the activities that matter.'
 };
-const pinPositions = { optimize:{left:'10%', top:'62%'}, restore:{left:'44%', top:'66%'}, thrive:{left:'80%', top:'28%'} };
+const pinPositions = { optimize:{left:'12%', top:'66%'}, restore:{left:'48%', top:'49%'}, thrive:{left:'84%', top:'32%'} };
 function renderJourneyHero(d){
 document.getElementById('daySummaryDay').textContent = 'Day ' + d.label;
 const phaseEl = document.getElementById('daySummaryPhase');
