@@ -116,6 +116,12 @@ padding:7px 12px; border-radius:20px; background:var(--card);
 border:1px solid var(--line); color:var(--ink-soft); cursor:pointer;
 }
 .day-chip.active{ background:var(--ink); color:#F4F3EE; border-color:var(--ink); }
+.day-slider-wrap{ padding:6px 2px 4px; margin:8px 0 4px; }
+.day-slider-label{ text-align:center; font-family:'Outfit', sans-serif; font-size:17px; font-weight:600; color:var(--ink); margin-bottom:8px; }
+.day-slider{ width:100%; height:6px; border-radius:4px; appearance:none; background:linear-gradient(to right, var(--optimize), var(--restore), var(--thrive)); outline:none; cursor:pointer; }
+.day-slider::-webkit-slider-thumb{ appearance:none; width:22px; height:22px; border-radius:50%; background:#fff; border:4px solid var(--ink); box-shadow:0 2px 6px rgba(10,27,61,0.3); cursor:pointer; }
+.day-slider::-moz-range-thumb{ width:22px; height:22px; border-radius:50%; background:#fff; border:4px solid var(--ink); box-shadow:0 2px 6px rgba(10,27,61,0.3); cursor:pointer; border:none; outline:4px solid var(--ink); }
+.day-slider-scale{ display:flex; justify-content:space-between; font-size:10px; color:var(--ink-soft); font-family:'Inter', sans-serif; font-weight:600; letter-spacing:0.3px; margin-top:6px; text-transform:uppercase; }
 .ring-wrap{
 display:flex; justify-content:center; margin:14px 0 10px; position:relative;
 }
@@ -542,7 +548,11 @@ h1.page-title { font-size: 28px !important; }
 <div class="proc-btn" data-proc="hip" onclick="setProcedure('hip')">Hip · Direct Anterior</div>
 <div class="proc-btn" data-proc="knee" onclick="setProcedure('knee')">Knee · Muscle-Sparing</div>
 </div>
-<div class="day-chips" id="dayChips"></div>
+<div class="day-slider-wrap">
+<div class="day-slider-label" id="daySliderLabel">Day 0</div>
+<input type="range" id="daySlider" class="day-slider" min="-120" max="150" value="0" oninput="onSliderInput(this.value)">
+<div class="day-slider-scale"><span>Surgery prep</span><span>Recovery</span></div>
+</div>
 <div class="journey-hero" id="journeyHero">
 <h1 class="journey-title">Your Recovery Journey</h1>
 <div class="journey-sub">Progress today. A stronger tomorrow.</div>
@@ -804,7 +814,17 @@ h1.page-title { font-size: 28px !important; }
 </div>
 <script>
 let procedure = 'hip'; // 'hip' | 'knee'
-let currentDayIndex = 3; // index into dayPoints
+let currentDay = 0; // the patient's actual day, any integer
+function phaseForDay(day){
+if(day < 0) return 'optimize';
+if(day < 28) return 'restore';
+return 'thrive';
+}
+function dayLabelText(day){
+if(day === 0) return 'Surgery day';
+if(day < 0) return Math.abs(day) + (Math.abs(day)===1 ? ' day' : ' days') + ' until surgery';
+return day + (day===1 ? ' day' : ' days') + ' after surgery';
+}
 const dayPoints = [
 {day:-30, label:'−30', phase:'optimize', angle:8, desc:'days until surgery'},
 {day:-14, label:'−14', phase:'optimize', angle:45, desc:'days until surgery'},
@@ -872,9 +892,12 @@ const taskMap = {
 {t: procedure==='hip' ? 'Hip precautions end at 3 months' : 'Full activity progression continues under PT guidance', m:'Milestone'},
 ],
 };
-function renderDayChips(){
-const wrap = document.getElementById('dayChips');
-wrap.innerHTML = dayPoints.map((d,i)=>`<div class="day-chip ${i===currentDayIndex?'active':''}" onclick="setDay(${i})">Day ${d.label}</div>`).join('');
+function updateDaySliderUI(day){
+document.getElementById('daySlider').value = day;
+document.getElementById('daySliderLabel').textContent = dayLabelText(day);
+}
+function onSliderInput(val){
+setDay(parseInt(val,10));
 }
 const phaseQuotes = {
 optimize:'Every step now sets up an easier recovery later.',
@@ -897,23 +920,24 @@ restore:'Protecting your new joint while you get moving again.',
 thrive:'You\'re making great progress and getting back to the activities that matter.'
 };
 const pinPositions = { optimize:{left:'12%', top:'63%'}, restore:{left:'48%', top:'49%'}, thrive:{left:'84%', top:'32%'} };
-function renderJourneyHero(d){
-document.getElementById('daySummaryDay').textContent = 'Day ' + d.label;
+function renderJourneyHero(day){
+const phase = phaseForDay(day);
+document.getElementById('daySummaryDay').textContent = dayLabelText(day);
 const phaseEl = document.getElementById('daySummaryPhase');
-phaseEl.textContent = phaseLabel[d.phase].toUpperCase();
-phaseEl.style.color = phaseColor[d.phase];
-document.getElementById('daySummaryText').textContent = phaseSummary[d.phase];
-document.getElementById('daySummaryPhoto').src = phasePhotos[d.phase];
-document.getElementById('daySummaryPhoto').style.objectPosition = phasePhotoPos[d.phase] || 'center';
-document.getElementById('quoteText').textContent = '\u201c' + phaseQuotes[d.phase] + '\u201d';
+phaseEl.textContent = phaseLabel[phase].toUpperCase();
+phaseEl.style.color = phaseColor[phase];
+document.getElementById('daySummaryText').textContent = phaseSummary[phase];
+document.getElementById('daySummaryPhoto').src = phasePhotos[phase];
+document.getElementById('daySummaryPhoto').style.objectPosition = phasePhotoPos[phase] || 'center';
+document.getElementById('quoteText').textContent = '\u201c' + phaseQuotes[phase] + '\u201d';
 const pin = document.getElementById('journeyPin');
-const pos = pinPositions[d.phase];
+const pos = pinPositions[phase];
 pin.style.left = pos.left;
 pin.style.top = pos.top;
-document.getElementById('pinDay').textContent = 'Day ' + d.label;
+document.getElementById('pinDay').textContent = dayLabelText(day);
 }
 function updateProgressDots(){
-const day = dayPoints[currentDayIndex].day;
+const day = currentDay;
 const tasks = taskMap[String(day)] || [];
 const total = tasks.length;
 let doneCount = 0;
@@ -927,15 +951,14 @@ dot.className = 'p-dot' + (i<doneCount ? ' done' : '');
 dotsEl.appendChild(dot);
 }
 }
-function setDay(i){
-currentDayIndex = i;
-const d = dayPoints[i];
-renderJourneyHero(d);
-renderDayChips();
-renderTasks(d.day);
-renderShop(d.day);
+function setDay(day){
+currentDay = day;
+renderJourneyHero(day);
+updateDaySliderUI(day);
+renderTasks(day);
+renderShop(day);
 renderMedSchedule();
-renderWalkTargets(d.day);
+renderWalkTargets(day);
 updateProgressDots();
 }
 function renderTasks(day){
@@ -1124,8 +1147,7 @@ const notifSamples = {
 '90':{h:'Milestone reached', b:'Most patients are cleared for full activity by now. How are you feeling?'},
 };
 function previewNotification(){
-const d = dayPoints[currentDayIndex];
-const n = notifSamples[String(d.day)] || {h:'Siddiqi 360', b:'You have a reminder for today.'};
+const n = notifSamples[String(currentDay)] || {h:'Siddiqi 360', b:'You have a reminder for today.'};
 document.getElementById('notifHead').textContent = n.h;
 document.getElementById('notifBody').textContent = n.b;
 const banner = document.getElementById('notifBanner');
@@ -1350,11 +1372,11 @@ const optionalMedsList = [
 {n:'Methocarbamol (Robaxin)', d:'750mg every 12 hours · 4 weeks', note:'If prescribed, muscle relaxation'},
 ];
 function renderMedSchedule(){
-const day = dayPoints[currentDayIndex].day;
+const day = currentDay;
 const blocksWithActive = medBlocks.map(b => ({...b, items: b.items.filter(it => isActive(it.n, day))}));
 const activeBlocks = blocksWithActive.filter(b => b.items.length > 0);
 if(activeBlocks.length === 0){
-document.getElementById('medSchedule').innerHTML = `<div class="card" style="text-align:center; color:var(--ink-soft); font-size:12.5px; padding:22px 16px;">Nothing scheduled yet for Day ${dayPoints[currentDayIndex].label}. Your supplement window opens Day −30.</div>`;
+document.getElementById('medSchedule').innerHTML = `<div class="card" style="text-align:center; color:var(--ink-soft); font-size:12.5px; padding:22px 16px;">Nothing scheduled yet — ${dayLabelText(day)}. Your supplement window opens 30 days before surgery.</div>`;
 } else {
 document.getElementById('medSchedule').innerHTML = activeBlocks.map((b,bi)=>`
 <div class="med-time-head">
@@ -1655,7 +1677,7 @@ liveMilestones = null;
 renderMilestones();
 renderArticles();
 renderExercises();
-renderTasks(dayPoints[currentDayIndex].day);
+renderTasks(currentDay);
 }
 // -------- PAIN BARS --------
 const painData = [4,5,3,4,2,3,3];
@@ -1708,18 +1730,13 @@ goTo('home');
 await requestNotificationPermission();
 scheduleLocalNotifications();
 }
-function nearestDayIndex(){
-if(!demoState.surgeryDate) return 0; // no date on file yet: start at Day -30, the beginning of the journey
+function computeRealDay(){
+if(!demoState.surgeryDate) return -30; // no date on file yet: start 30 days out, a sensible default
 const surgery = new Date(demoState.surgeryDate + 'T00:00:00');
 const today = new Date();
 today.setHours(0,0,0,0);
 const realDay = Math.round((today - surgery) / 86400000);
-let closest = 0, closestDiff = Infinity;
-dayPoints.forEach((d,i)=>{
-const diff = Math.abs(d.day - realDay);
-if(diff < closestDiff){ closestDiff = diff; closest = i; }
-});
-return closest;
+return Math.max(-120, Math.min(150, realDay));
 }
 function signOut(){
 demoState = { tasks:{}, ex:{}, pills:{}, pain:3 };
@@ -1784,7 +1801,7 @@ async function init(){
 await loadState();
 document.querySelector('.proc-btn[data-proc="hip"]').classList.add('active');
 renderDayChips();
-setDay(nearestDayIndex());
+setDay(computeRealDay());
 renderMilestones();
 renderArticles();
 renderMeds();
