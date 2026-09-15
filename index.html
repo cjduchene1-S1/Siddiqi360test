@@ -68,28 +68,13 @@ transition:opacity .22s ease, transform .22s ease;
 .screen::-webkit-scrollbar{display:none;}
 /* ---------- SPLASH ---------- */
 #splash{
-background:var(--ink);
-display:flex; flex-direction:column; align-items:center; justify-content:center;
-padding:0 40px; text-align:center;
+background-image:url('splash-bg.png');
+background-size:cover; background-position:center;
+position:relative; overflow:hidden;
 }
-#splash .mark{
-font-family:'Outfit', sans-serif; font-size:34px; font-weight:600; color:#F4F3EE;
-letter-spacing:2px; text-transform:uppercase;
-}
-#splash .mark span{ color:#C9A054; }
-#splash .tagline{
-margin-top:14px; font-family:'Inter', sans-serif; font-weight:600; font-size:12px;
-letter-spacing:2px; color:#9AA6B5; text-transform:uppercase;
-}
-#splash .sub{
-margin-top:28px; color:#C7CCD6; font-size:15px; line-height:2; max-width:300px;
-text-transform:uppercase; letter-spacing:0.6px; font-weight:500;
-}
-#splash button{
-margin-top:46px; background:var(--gold); color:var(--ink); border:none;
-padding:14px 34px; border-radius:30px; font-size:14px; font-weight:700;
-font-family:'Inter',sans-serif; letter-spacing:0.5px; cursor:pointer;
-box-shadow:0 10px 24px rgba(223,168,44,0.28); text-transform:uppercase;
+.splash-login-btn{
+position:absolute; left:22.3%; width:42.5%; top:67.6%; height:5.7%;
+background:transparent; border:none; cursor:pointer; z-index:2;
 }
 /* ---------- SHARED ---------- */
 h1.page-title{
@@ -516,9 +501,7 @@ h1.page-title { font-size: 28px !important; }
 </div>
 <!-- SPLASH -->
 <div class="screen active" id="splash" style="position:absolute; inset:0; z-index:45;">
-<img src="apple-touch-icon.png" alt="Siddiqi 360" style="width:250px; height:250px; margin-bottom:22px; display:block;">
-<div class="sub">Your perioperative journey, guided day by day, from your surgeon.</div>
-<button onclick="goTo('signin')">Begin</button>
+<button class="splash-login-btn" onclick="goTo('signin')" aria-label="Login"></button>
 </div>
 <div class="screen" id="signin" style="position:absolute; inset:0; z-index:44; background:var(--paper); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0 36px; text-align:center;">
 <div style="width:52px; height:52px; border-radius:16px; background:var(--ink); display:flex; align-items:center; justify-content:center; margin-bottom:22px;">
