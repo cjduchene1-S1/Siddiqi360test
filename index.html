@@ -33,20 +33,18 @@
 --shadow: 0 20px 45px rgba(10,27,61,0.16);
 }
 *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
-html,body{height:100%;}
+html{height:100%;}
 body{
 margin:0;
 background: var(--paper);
 font-family:'Inter', sans-serif;
-min-height:100vh;
-min-height:100dvh;
+height:calc(var(--app-height, 100vh));
 }
 .device{
 width:100%;
 max-width:520px;
 margin:0 auto;
-min-height:100vh;
-min-height:100dvh;
+height:calc(var(--app-height, 100vh));
 background:var(--paper);
 position:relative;
 overflow:hidden;
@@ -813,6 +811,15 @@ h1.page-title { font-size: 28px !important; }
 </div>
 </div>
 <script>
+// Measure the TRUE visible viewport height directly (iOS standalone/home-screen mode
+// doesn't always report 100vh/100dvh accurately), and keep it updated on resize,
+// orientation change, and when the on-screen keyboard shows/hides.
+function setAppHeight(){
+document.documentElement.style.setProperty('--app-height', window.innerHeight + 'px');
+}
+setAppHeight();
+window.addEventListener('resize', setAppHeight);
+window.addEventListener('orientationchange', setAppHeight);
 let procedure = 'hip'; // 'hip' | 'knee'
 let currentDay = 0; // the patient's actual day, any integer
 function phaseForDay(day){
